@@ -1,0 +1,7 @@
+.. _api_overview_label:
+
+API Overview
+============
+.. automodule:: decompiler_utils
+    :members:
+    :undoc-members:

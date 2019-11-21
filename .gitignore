@@ -1,0 +1,25 @@
+# Compiled python modules.
+*.pyc
+
+# Setuptools distribution folder.
+/dist/
+
+# Python egg metadata, regenerated from source files by setuptools.
+/*.egg-info
+
+# Tests
+.pytest_cache
+
+# Build
+/build/
+
+# Editors and IDE data
+.vscode
+.idea
+
+# IDA temporary files
+*.id0
+*.id1
+*.id2
+*.nam
+*.til

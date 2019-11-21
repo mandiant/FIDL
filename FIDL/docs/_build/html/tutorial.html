@@ -1,0 +1,1152 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Getting started &mdash; FIDL 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Core API" href="api.html" />
+    <link rel="prev" title="Known gotchas" href="gotchas.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> FIDL
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gotchas.html">Known gotchas</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-controlflowinator">The ControlFlowinator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#batteries-included">Batteries included</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#function-arguments">Function arguments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-variables">Local variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#function-calls">Function calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-little-example">A little example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-more-complete-example">A more complete example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">FIDL</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Getting started</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/tutorial.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="getting-started">
+<span id="tutorial-label"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.0.</span></p>
+</div>
+<p>This section will introduce the basics of the FIDL API as well as examples for the most common tasks.</p>
+<div class="section" id="the-controlflowinator">
+<span id="controlflowinator-label"></span><h2>The ControlFlowinator<a class="headerlink" href="#the-controlflowinator" title="Permalink to this headline">¶</a></h2>
+<p>The main object for the FIDL API is a data structure representing individual functions. This data structure is a mix between the assembly-level control flow graph (<em>CFG</em>) and the decompilation output in IDA. It has been conveniently named <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code>.</p>
+<p>To understand it better, picture yourself a <em>CFG</em> where every node is a high level code construct, e.g.,</p>
+<blockquote>
+<div><ul class="simple">
+<li>if</li>
+<li>assignment</li>
+<li>function call</li>
+<li>return</li>
+<li>etc.</li>
+</ul>
+</div></blockquote>
+<p>In a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object, every node of the <em>CFG</em> translates roughly to a line of decompiled code.</p>
+<p>Below you can find a visualization of the <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object for an example function, next to the <em>classical</em> IDA function views (assembly <em>CFG</em> and decompilation). Essentially, FIDL adds a new abstract representation of a function.</p>
+<a class="reference internal image-reference" href="_images/representations.png"><img alt="controlFlowinator as a new abstract representation of a function" class="align-center" src="_images/representations.png" style="width: 800px;" /></a>
+<p>Creating a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object scales well when dealing with large functions:</p>
+<a class="reference internal image-reference" href="_images/controlflowinator_scales.png"><img alt="controlFlowinator creation scales well" class="align-center" src="_images/controlflowinator_scales.png" style="width: 800px;" /></a>
+</div>
+<div class="section" id="batteries-included">
+<h2>Batteries included<a class="headerlink" href="#batteries-included" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object contains by default a lot of interesting information about the function it represents, e.g.,</p>
+<blockquote>
+<div><ul class="simple">
+<li>local variables</li>
+<li>arguments</li>
+<li>function calls</li>
+<li>return type</li>
+</ul>
+</div></blockquote>
+<p>This information is easily accessible as attributes. Let’s use the following function (from <code class="docutils literal notranslate"><span class="pre">putty.exe</span></code>) as an example:</p>
+<div class="highlight-C notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">BOOL</span> <span class="kr">__fastcall</span> <span class="nf">complex_75_sub_140062678</span><span class="p">(</span><span class="kr">__int64</span> <span class="n">a1</span><span class="p">,</span> <span class="k">const</span> <span class="n">WCHAR</span> <span class="o">*</span><span class="n">a2</span><span class="p">,</span> <span class="kr">__int64</span> <span class="n">a3</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a4</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="kr">__int64</span> <span class="n">v4</span><span class="p">;</span> <span class="c1">// rdi</span>
+  <span class="k">const</span> <span class="kr">__m128i</span> <span class="o">*</span><span class="n">v5</span><span class="p">;</span> <span class="c1">// rbx</span>
+  <span class="kt">int</span> <span class="n">v6</span><span class="p">;</span> <span class="c1">// eax</span>
+  <span class="n">SIZE_T</span> <span class="n">v7</span><span class="p">;</span> <span class="c1">// r15</span>
+  <span class="n">_DWORD</span> <span class="o">*</span><span class="n">v8</span><span class="p">;</span> <span class="c1">// rax</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">v9</span><span class="p">;</span> <span class="c1">// r14</span>
+  <span class="n">HGLOBAL</span> <span class="n">v10</span><span class="p">;</span> <span class="c1">// rax</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">v11</span><span class="p">;</span> <span class="c1">// r13</span>
+  <span class="kr">__m128i</span> <span class="o">*</span><span class="n">v12</span><span class="p">;</span> <span class="c1">// r12</span>
+  <span class="kt">int</span> <span class="n">v13</span><span class="p">;</span> <span class="c1">// esi</span>
+  <span class="o">&lt;</span><span class="n">snip</span><span class="p">...</span><span class="o">&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>This is a fairly complex function with four arguments and many local variables.</p>
+<div class="section" id="function-arguments">
+<h3>Function arguments<a class="headerlink" href="#function-arguments" title="Permalink to this headline">¶</a></h3>
+<p>Extract information from a function arguments is easy. We will start by importing the module and creating a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">FIDL.decompiler_utils</span> <span class="kn">as</span> <span class="nn">du</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">controlFlowinator</span><span class="p">(</span><span class="n">ea</span><span class="o">=</span><span class="n">here</span><span class="p">(),</span> <span class="n">fast</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span>
+<span class="o">&lt;</span><span class="n">FIDL</span><span class="o">.</span><span class="n">decompiler_utils</span><span class="o">.</span><span class="n">controlFlowinator</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x00000176B566BE48</span><span class="o">&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>We can now access this function arguments via the <code class="docutils literal notranslate"><span class="pre">args</span></code> attribute. Note that arguments are pretty printed by default.</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span><span class="o">.</span><span class="n">args</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a1</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">__int64</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a2</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">const</span> <span class="n">WCHAR</span> <span class="o">*</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">Complex</span> <span class="nb">type</span><span class="p">:</span> <span class="n">WCHAR</span>
+<span class="n">Pointed</span> <span class="nb">object</span><span class="p">:</span> <span class="n">const</span> <span class="n">WCHAR</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a3</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">__int64</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a4</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">4</span>
+<span class="p">{</span><span class="mh">0x0</span><span class="p">:</span> <span class="p">,</span> <span class="mh">0x1</span><span class="p">:</span> <span class="p">,</span> <span class="mh">0x2</span><span class="p">:</span> <span class="p">,</span> <span class="mh">0x3</span><span class="p">:</span> <span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p><code class="docutils literal notranslate"><span class="pre">c.args</span></code> is a dict indexed by a numerical index. Its individual arguments are of type <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code>. Please refer to <a class="reference internal" href="api.html#api-label"><span class="std std-ref">Core API</span></a> for more information about this class.</p>
+<p>We can now easily extract information from individual arguments. As an example we’ll query properties from the first two arguments of this function.</p>
+<p>Remember the prototype is: <code class="docutils literal notranslate"><span class="pre">BOOL</span> <span class="pre">__fastcall</span> <span class="pre">complex_75_sub_140062678(__int64</span> <span class="pre">a1,</span> <span class="pre">const</span> <span class="pre">WCHAR</span> <span class="pre">*a2,</span> <span class="pre">__int64</span> <span class="pre">a3,</span> <span class="pre">int</span> <span class="pre">a4)</span></code></p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="n">first</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="nb">dir</span><span class="p">(</span><span class="n">first</span><span class="p">)</span>
+<span class="p">[</span><span class="s1">&#39;__doc__&#39;</span><span class="p">,</span> <span class="s1">&#39;__init__&#39;</span><span class="p">,</span> <span class="s1">&#39;__module__&#39;</span><span class="p">,</span> <span class="s1">&#39;__repr__&#39;</span><span class="p">,</span> <span class="s1">&#39;_get_var_type&#39;</span><span class="p">,</span> <span class="s1">&#39;array_type&#39;</span><span class="p">,</span> <span class="s1">&#39;complex_type&#39;</span><span class="p">,</span> <span class="s1">&#39;is_a_function_of&#39;</span><span class="p">,</span> <span class="s1">&#39;is_arg&#39;</span><span class="p">,</span> <span class="s1">&#39;is_array&#39;</span><span class="p">,</span> <span class="s1">&#39;is_constrained&#39;</span><span class="p">,</span> <span class="s1">&#39;is_initialized&#39;</span><span class="p">,</span> <span class="s1">&#39;is_pointer&#39;</span><span class="p">,</span> <span class="s1">&#39;is_signed&#39;</span><span class="p">,</span> <span class="s1">&#39;is_tainted&#39;</span><span class="p">,</span> <span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;pointed_type&#39;</span><span class="p">,</span> <span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="s1">&#39;ti&#39;</span><span class="p">,</span> <span class="s1">&#39;type_name&#39;</span><span class="p">,</span> <span class="s1">&#39;var&#39;</span><span class="p">]</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">first</span><span class="o">.</span><span class="n">name</span>
+<span class="s1">&#39;a1&#39;</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">first</span><span class="o">.</span><span class="n">type_name</span>
+<span class="s1">&#39;__int64&#39;</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">first</span><span class="o">.</span><span class="n">pointed_type</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">first</span><span class="o">.</span><span class="n">is_signed</span>
+<span class="bp">True</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">first</span><span class="o">.</span><span class="n">is_pointer</span>
+<span class="bp">False</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">first</span><span class="o">.</span><span class="n">is_array</span>
+<span class="bp">False</span>
+
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">second</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">second</span><span class="o">.</span><span class="n">name</span>
+<span class="s1">&#39;a2&#39;</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">second</span><span class="o">.</span><span class="n">is_pointer</span>
+<span class="bp">True</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">second</span><span class="o">.</span><span class="n">pointed_type</span>
+<span class="n">const</span> <span class="n">WCHAR</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">second</span><span class="o">.</span><span class="n">type_name</span>
+<span class="s1">&#39;const WCHAR *&#39;</span>
+</pre></div>
+</td></tr></table></div>
+<p>See <a class="reference internal" href="api.html#api-label"><span class="std std-ref">Core API</span></a> for more information about working with arguments.</p>
+</div>
+<div class="section" id="local-variables">
+<span id="local-variables-label"></span><h3>Local variables<a class="headerlink" href="#local-variables" title="Permalink to this headline">¶</a></h3>
+<p>Working with a function’s local variables is very similar to working with arguments (under the hood, both are of the same type in <em>Hex-Rays</em>). In <em>FIDL</em>, local variables share type with function arguments as well (<code class="docutils literal notranslate"><span class="pre">my_var_t</span></code>).</p>
+<p>Let’s start as usual by importing the module and constructing a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">FIDL.decompiler_utils</span> <span class="kn">as</span> <span class="nn">du</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">controlFlowinator</span><span class="p">(</span><span class="n">ea</span><span class="o">=</span><span class="n">here</span><span class="p">(),</span> <span class="n">fast</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span>
+<span class="o">&lt;</span><span class="n">FIDL</span><span class="o">.</span><span class="n">decompiler_utils</span><span class="o">.</span><span class="n">controlFlowinator</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x000001D756DB21C8</span><span class="o">&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Accessing the local variables using the <code class="docutils literal notranslate"><span class="pre">lvars</span></code> attribute, a dictionary of <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code> objects:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span><span class="o">.</span><span class="n">lvars</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">v4</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">__int64</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">v5</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">const</span> <span class="n">__m128i</span> <span class="o">*</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">Complex</span> <span class="nb">type</span><span class="p">:</span> <span class="n">__m128i</span>
+<span class="n">Pointed</span> <span class="nb">object</span><span class="p">:</span> <span class="n">const</span> <span class="n">__m128i</span>
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">...&gt;</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">WideCharStr</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">__int16</span><span class="p">[</span><span class="mi">256</span><span class="p">]</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">512</span>
+<span class="n">Array</span> <span class="nb">type</span><span class="p">:</span> <span class="n">__int16</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">v86</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">__int64</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">vars30</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="nb">int</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">4</span>
+<span class="o">&lt;</span><span class="n">snip</span><span class="o">...&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Let’s inspect an interesting one. That array of “words” for example. We happen to know the index (dict key) but we could search for the name as well by iterating the <em>dict</em> and accessing the <code class="docutils literal notranslate"><span class="pre">name</span></code> attribute. This is an straightforward exercise left to the reader ;)</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="n">lv</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">lvars</span><span class="p">[</span><span class="mh">0x55</span><span class="p">]</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">lv</span><span class="o">.</span><span class="n">is_array</span>
+<span class="bp">True</span>
+
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">lv</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">WideCharStr</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">__int16</span><span class="p">[</span><span class="mi">256</span><span class="p">]</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">512</span>
+<span class="n">Array</span> <span class="nb">type</span><span class="p">:</span> <span class="n">__int16</span>
+<span class="n">Array</span> <span class="n">element</span> <span class="n">size</span><span class="p">:</span> <span class="mi">2</span>
+<span class="n">Array</span> <span class="n">length</span><span class="p">:</span> <span class="mi">256</span>
+
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">lv</span><span class="o">.</span><span class="n">array_len</span>
+<span class="mh">0x100</span><span class="n">L</span>
+</pre></div>
+</td></tr></table></div>
+<p>As we can see we have easy access to all array properties (type, length, etc.)</p>
+<p>See <a class="reference internal" href="api.html#api-label"><span class="std std-ref">Core API</span></a> for more information about working with local variables.</p>
+</div>
+<div class="section" id="function-calls">
+<h3>Function calls<a class="headerlink" href="#function-calls" title="Permalink to this headline">¶</a></h3>
+<p>Another very important piece of information is which functions are being called by the function we are currently analyzing, as well as their arguments and return types.</p>
+<p>For this example let’s analyze another function. The function shown below displays <em>PuTTY</em>’s license:</p>
+<div class="highlight-C notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">INT_PTR</span> <span class="kr">__fastcall</span> <span class="nf">DialogFunc</span><span class="p">(</span><span class="n">HWND</span> <span class="n">a1</span><span class="p">,</span> <span class="kt">int</span> <span class="n">a2</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="kr">__int16</span> <span class="n">a3</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="n">HWND</span> <span class="n">v3</span><span class="p">;</span> <span class="c1">// rdi</span>
+  <span class="kt">int</span> <span class="n">v4</span><span class="p">;</span> <span class="c1">// edx</span>
+  <span class="kt">int</span> <span class="n">v5</span><span class="p">;</span> <span class="c1">// edx</span>
+  <span class="n">CHAR</span> <span class="o">*</span><span class="n">v7</span><span class="p">;</span> <span class="c1">// rbx</span>
+
+  <span class="n">v3</span> <span class="o">=</span> <span class="n">a1</span><span class="p">;</span>
+  <span class="n">v4</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">-</span> <span class="mi">16</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">v4</span> <span class="p">)</span>
+    <span class="k">goto</span> <span class="n">LABEL_11</span><span class="p">;</span>
+  <span class="n">v5</span> <span class="o">=</span> <span class="n">v4</span> <span class="o">-</span> <span class="mi">256</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="o">!</span><span class="n">v5</span> <span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">v7</span> <span class="o">=</span> <span class="n">sub_14000F698</span><span class="p">(</span><span class="s">&quot;%s Licence&quot;</span><span class="p">,</span> <span class="s">&quot;PuTTY&quot;</span><span class="p">);</span>
+    <span class="n">SetWindowTextA</span><span class="p">(</span><span class="n">v3</span><span class="p">,</span> <span class="n">v7</span><span class="p">);</span>
+    <span class="n">sub_14000FCFC</span><span class="p">(</span><span class="n">v7</span><span class="p">);</span>
+    <span class="n">SetDlgItemTextA</span><span class="p">(</span>
+      <span class="n">v3</span><span class="p">,</span>
+      <span class="mi">1002</span><span class="p">,</span>
+      <span class="s">&quot;PuTTY is copyright 1997-2017 Simon Tatham.</span><span class="se">\r\n</span><span class="s">&quot;</span>
+      <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span>
+      <span class="s">&quot;Portions copyright Robert de Bath, Joris van Rantwijk, Delian Delchev, Andreas Schultz, Jeroen Massar, Wez Furlong&quot;</span>
+      <span class="s">&quot;, Nicolas Barry, Justin Bradford, Ben Harris, Malcolm Smith, Ahmad Khalifa, Markus Kuhn, Colin Watson, Christopher&quot;</span>
+      <span class="s">&quot; Staite, and CORE SDI S.A.</span><span class="se">\r\n</span><span class="s">&quot;</span>
+      <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span>
+      <span class="s">&quot;Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated docum&quot;</span>
+      <span class="s">&quot;entation files (the </span><span class="se">\&quot;</span><span class="s">Software</span><span class="se">\&quot;</span><span class="s">), to deal in the Software without restriction, including without limitation the r&quot;</span>
+      <span class="s">&quot;ights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to per&quot;</span>
+      <span class="s">&quot;mit persons to whom the Software is furnished to do so, subject to the following conditions:</span><span class="se">\r\n</span><span class="s">&quot;</span>
+      <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span>
+      <span class="s">&quot;The above copyright notice and this permission notice shall be included in all copies or substantial portions of t&quot;</span>
+      <span class="s">&quot;he Software.</span><span class="se">\r\n</span><span class="s">&quot;</span>
+      <span class="s">&quot;</span><span class="se">\r\n</span><span class="s">&quot;</span>
+      <span class="s">&quot;THE SOFTWARE IS PROVIDED </span><span class="se">\&quot;</span><span class="s">AS IS</span><span class="se">\&quot;</span><span class="s">, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO&quot;</span>
+      <span class="s">&quot; THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE C&quot;</span>
+      <span class="s">&quot;OPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OT&quot;</span>
+      <span class="s">&quot;HERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">1</span><span class="n">i64</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v5</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">a3</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="p">)</span>
+<span class="nl">LABEL_11</span><span class="p">:</span>
+    <span class="n">EndDialog</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="mi">1</span><span class="n">i64</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>To illustrate how to work with function calls, let’s get the <em>license string</em>, that is, the third argument of the <code class="docutils literal notranslate"><span class="pre">SetDlgItemTextA</span></code> function.</p>
+<p>We will start, as usual, by creating a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object and inspecting its attributes, in this case <code class="docutils literal notranslate"><span class="pre">calls</span></code>:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="kn">import</span> <span class="nn">FIDL.decompiler_utils</span> <span class="kn">as</span> <span class="nn">du</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">controlFlowinator</span><span class="p">(</span><span class="n">ea</span><span class="o">=</span><span class="n">here</span><span class="p">(),</span> <span class="n">fast</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span>
+<span class="o">&lt;</span><span class="n">FIDL</span><span class="o">.</span><span class="n">decompiler_utils</span><span class="o">.</span><span class="n">controlFlowinator</span> <span class="n">instance</span> <span class="n">at</span> <span class="mh">0x000002A0B67F5B08</span><span class="o">&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<p>Accessing the <code class="docutils literal notranslate"><span class="pre">calls</span></code> attribute we can quickly preview the information it contains, since it is pretty printed by default:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="n">c</span><span class="o">.</span><span class="n">calls</span>
+<span class="o">--------------------------------------</span>
+<span class="n">Ea</span><span class="p">:</span> <span class="mi">14005892</span><span class="n">E</span>
+<span class="n">Target</span><span class="s1">&#39;s Name: sub_14000FCFC</span>
+<span class="n">Target</span><span class="s1">&#39;s Ea: 14000FCFC</span>
+<span class="n">Target</span><span class="s1">&#39;s ret: __int64</span>
+<span class="n">Args</span><span class="p">:</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">v7</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">CHAR</span> <span class="o">*</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+  <span class="n">Complex</span> <span class="nb">type</span><span class="p">:</span> <span class="n">CHAR</span>
+  <span class="n">Pointed</span> <span class="nb">object</span><span class="p">:</span> <span class="n">CHAR</span>
+ <span class="o">-</span> <span class="mi">0</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="p">)</span>
+<span class="o">--------------------------------------</span>
+<span class="n">Ea</span><span class="p">:</span> <span class="mi">140058917</span>
+<span class="n">Target</span><span class="s1">&#39;s Name: sub_14000F698</span>
+<span class="n">Target</span><span class="s1">&#39;s Ea: 14000F698</span>
+<span class="n">Target</span><span class="s1">&#39;s ret: __int64</span>
+<span class="n">Args</span><span class="p">:</span>
+<span class="o">--------------------------------------</span>
+<span class="n">Ea</span><span class="p">:</span> <span class="mi">1400588</span><span class="n">F6</span>
+<span class="n">Target</span><span class="s1">&#39;s Name: EndDialog</span>
+<span class="n">Target</span><span class="s1">&#39;s Ea: 140090898</span>
+<span class="n">Target</span><span class="s1">&#39;s ret: BOOL</span>
+<span class="n">Args</span><span class="p">:</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">a1</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">HWND</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+  <span class="n">Complex</span> <span class="nb">type</span><span class="p">:</span> <span class="n">HWND__</span>
+  <span class="n">Pointed</span> <span class="nb">object</span><span class="p">:</span> <span class="n">HWND__</span>
+ <span class="o">-</span> <span class="mi">0</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="p">)</span>
+ <span class="o">-</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="il">1L</span><span class="p">)</span>
+<span class="o">--------------------------------------</span>
+<span class="n">Ea</span><span class="p">:</span> <span class="mi">140058925</span>
+<span class="n">Target</span><span class="s1">&#39;s Name: SetWindowTextA</span>
+<span class="n">Target</span><span class="s1">&#39;s Ea: 1400909A8</span>
+<span class="n">Target</span><span class="s1">&#39;s ret: BOOL</span>
+<span class="n">Args</span><span class="p">:</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">v3</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">HWND</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+  <span class="n">Complex</span> <span class="nb">type</span><span class="p">:</span> <span class="n">HWND__</span>
+  <span class="n">Pointed</span> <span class="nb">object</span><span class="p">:</span> <span class="n">HWND__</span>
+ <span class="o">-</span> <span class="mi">0</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="p">)</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">v7</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">CHAR</span> <span class="o">*</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+  <span class="n">Complex</span> <span class="nb">type</span><span class="p">:</span> <span class="n">CHAR</span>
+  <span class="n">Pointed</span> <span class="nb">object</span><span class="p">:</span> <span class="n">CHAR</span>
+ <span class="o">-</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="p">)</span>
+<span class="o">--------------------------------------</span>
+<span class="n">Ea</span><span class="p">:</span> <span class="mi">140058942</span>
+<span class="n">Target</span><span class="s1">&#39;s Name: SetDlgItemTextA</span>
+<span class="n">Target</span><span class="s1">&#39;s Ea: 140090948</span>
+<span class="n">Target</span><span class="s1">&#39;s ret: BOOL</span>
+<span class="n">Args</span><span class="p">:</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">v3</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">HWND</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+  <span class="n">Complex</span> <span class="nb">type</span><span class="p">:</span> <span class="n">HWND__</span>
+  <span class="n">Pointed</span> <span class="nb">object</span><span class="p">:</span> <span class="n">HWND__</span>
+ <span class="o">-</span> <span class="mi">0</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="p">)</span>
+ <span class="o">-</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="il">1002L</span><span class="p">)</span>
+ <span class="o">-</span> <span class="mi">2</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="s1">&#39;PuTTY is copyright 1997-2017 Simon Tatham.</span><span class="se">\r\n\r\n</span><span class="s1">Portions copyright Robert de Bath, Joris van Rantwijk, Delian Delchev, Andreas Schultz, &lt;snip...&gt;&#39;</span><span class="p">)</span>
+<span class="p">[,</span> <span class="p">,</span> <span class="p">,</span> <span class="p">,</span> <span class="p">]</span>
+</pre></div>
+</td></tr></table></div>
+<p>As we can see, the long string containing <em>PuTTY</em>’s license is indeed recognized as the third argument of that Windows API. Notice how the function arguments are represented by a <code class="docutils literal notranslate"><span class="pre">named</span> <span class="pre">tuple</span></code> with elements <code class="docutils literal notranslate"><span class="pre">type</span></code> and <code class="docutils literal notranslate"><span class="pre">val</span></code>. We’ll now programatically search the function call matching that API name:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">c</span><span class="o">.</span><span class="n">calls</span><span class="p">:</span>
+<span class="n">Python</span><span class="o">&gt;</span>   <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;SetDlgItemTextA&#39;</span><span class="p">:</span>
+<span class="n">Python</span><span class="o">&gt;</span>      <span class="k">break</span>
+<span class="n">Python</span><span class="o">&gt;</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">k</span>
+<span class="o">--------------------------------------</span>
+<span class="n">Ea</span><span class="p">:</span> <span class="mi">140058942</span>
+<span class="n">Target</span><span class="s1">&#39;s Name: SetDlgItemTextA</span>
+<span class="n">Target</span><span class="s1">&#39;s Ea: 140090948</span>
+<span class="n">Target</span><span class="s1">&#39;s ret: BOOL</span>
+<span class="n">Args</span><span class="p">:</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">v3</span>
+  <span class="n">Type</span> <span class="n">name</span><span class="p">:</span> <span class="n">HWND</span>
+  <span class="n">Size</span><span class="p">:</span> <span class="mi">8</span>
+  <span class="n">Complex</span> <span class="nb">type</span><span class="p">:</span> <span class="n">HWND__</span>
+  <span class="n">Pointed</span> <span class="nb">object</span><span class="p">:</span> <span class="n">HWND__</span>
+ <span class="o">-</span> <span class="mi">0</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="p">)</span>
+ <span class="o">-</span> <span class="mi">1</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="il">1002L</span><span class="p">)</span>
+ <span class="o">-</span> <span class="mi">2</span><span class="p">:</span> <span class="n">Rep</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="s1">&#39;PuTTY is copyright 1997-2017 Simon Tatham.</span><span class="se">\r\n\r\n</span><span class="s1">Portions copyright Robert de Bath, Joris van Rantwijk &lt;snip...&gt;&#39;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>Finally, let’s locate its third argument and extract its value:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="n">Python</span><span class="o">&gt;</span><span class="n">k</span><span class="o">.</span><span class="n">args</span>
+<span class="p">{</span><span class="mh">0x0</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;var&#39;</span><span class="p">,</span> <span class="mh">0x3</span><span class="p">),</span> <span class="mh">0x1</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="mh">0x3ea</span><span class="n">L</span><span class="p">),</span> <span class="mh">0x2</span><span class="p">:</span> <span class="p">(</span><span class="s1">&#39;string&#39;</span><span class="p">,</span> <span class="s1">&#39;PuTTY is copyright 1997-2017 Simon Tatham.&lt;snip...&gt;&#39;</span><span class="p">)}</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">lic</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">lic</span><span class="o">.</span><span class="n">type</span>
+<span class="s1">&#39;string&#39;</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">s</span> <span class="o">=</span> <span class="n">lic</span><span class="o">.</span><span class="n">val</span>
+<span class="n">Python</span><span class="o">&gt;</span><span class="n">s</span>
+<span class="s1">&#39;PuTTY is copyright 1997-2017 Simon Tatham.</span><span class="se">\r\n\r\n</span><span class="s1">Portions copyright Robert de Bath, Joris van Rantwijk, Delian Delchev, Andreas Schultz, Jeroen Massar, Wez Furlong, Nicolas Barry, Justin Bradford, Ben Harris, Malcolm Smith, Ahmad Khalifa, Markus Kuhn, Colin Watson, Christopher Staite, and CORE SDI S.A.</span><span class="se">\r\n\r\n</span><span class="s1">Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</span><span class="se">\r\n\r\n</span><span class="s1">The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</span><span class="se">\r\n\r\n</span><span class="s1">THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.&#39;</span>
+</pre></div>
+</td></tr></table></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The function arguments of a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code>, representing a function, and the function arguments of a specific occurrence of a function call are not of the same type.</p>
+<p>A <strong>function call</strong> can have explicitly defined constants or strings as arguments, eg. <code class="docutils literal notranslate"><span class="pre">sub_140021F58(&quot;my_string&quot;,</span> <span class="pre">1337,</span> <span class="pre">v8)</span></code> accessed via a <em>named tuple</em> as shown in the code snippet above.</p>
+<p>The function arguments of a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> instance, representing the function itself, eg. <code class="docutils literal notranslate"><span class="pre">sub_140021F58(char</span> <span class="pre">*a1,</span> <span class="pre">int</span> <span class="pre">a2,</span> <span class="pre">__int64</span> <span class="pre">a3)</span></code> are of type <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code></p>
+<p class="last">However, if the function call has an argument of type <em>var</em>, its <em>val</em> (ue) will be an instance of <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code></p>
+</div>
+</div>
+<div class="section" id="a-little-example">
+<h3>A little example<a class="headerlink" href="#a-little-example" title="Permalink to this headline">¶</a></h3>
+<p>No reversing automation project is complete without an example involving <code class="docutils literal notranslate"><span class="pre">GetProcAddress</span></code>. Let’s consider the following <em>PuTTY</em> function, resolving dynamically some APIs.</p>
+<p>You can find this function at address 0x140055674 within the provided <code class="docutils literal notranslate"><span class="pre">putty.i64</span></code> IDB file (under <em>tests</em>)</p>
+<div class="highlight-C notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kr">__int64</span> <span class="nf">cgp_sneaky_direct_asg</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">HMODULE</span> <span class="n">v0</span><span class="p">;</span> <span class="c1">// rax</span>
+  <span class="n">HMODULE</span> <span class="n">v1</span><span class="p">;</span> <span class="c1">// rbx</span>
+
+  <span class="n">v0</span> <span class="o">=</span> <span class="n">sub_140065B68</span><span class="p">(</span><span class="s">&quot;comctl32.dll&quot;</span><span class="p">);</span>
+  <span class="n">v1</span> <span class="o">=</span> <span class="n">v0</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v0</span> <span class="p">)</span>
+    <span class="n">qword_1400C0DD0</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="s">&quot;InitCommonControls&quot;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">qword_1400C0DD0</span> <span class="o">=</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v1</span> <span class="p">)</span>
+    <span class="n">qword_1400C0DD8</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="s">&quot;MakeDragList&quot;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">qword_1400C0DD8</span> <span class="o">=</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v1</span> <span class="p">)</span>
+    <span class="n">qword_1400C0DE0</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="s">&quot;LBItemFromPt&quot;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">qword_1400C0DE0</span> <span class="o">=</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v1</span> <span class="p">)</span>
+    <span class="n">qword_1400C0DE8</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="s">&quot;DrawInsert&quot;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">qword_1400C0DE8</span> <span class="o">=</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">qword_1400C0DD0</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>As we can see, some functions belonging to <em>comctl32.dll</em> are being resolved at runtime and pointers to them are stored in global variables. Since we will be seeing these global variables somewhere else in the binary, it would be good to rename them in a way that references the API they are pointing to.</p>
+<p>The following script implements this:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">FIDL.decompiler_utils</span> <span class="kn">as</span> <span class="nn">du</span>
+
+
+<span class="n">callz</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">find_all_calls_to</span><span class="p">(</span><span class="n">f_name</span><span class="o">=</span><span class="s1">&#39;GetProcAddress&#39;</span><span class="p">,</span> <span class="n">ea</span><span class="o">=</span><span class="n">here</span><span class="p">())</span>
+<span class="k">for</span> <span class="n">co</span> <span class="ow">in</span> <span class="n">callz</span><span class="p">:</span>
+    <span class="c1"># The *second* argument of ``GetProcAddress`` is the API name</span>
+    <span class="n">api_name</span> <span class="o">=</span> <span class="n">co</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">val</span>
+
+    <span class="c1"># double check :)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">du</span><span class="o">.</span><span class="n">is_asg</span><span class="p">(</span><span class="n">co</span><span class="o">.</span><span class="n">node</span><span class="p">):</span>
+        <span class="k">continue</span>
+
+    <span class="n">lhs</span> <span class="o">=</span> <span class="n">co</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">x</span>
+    <span class="k">if</span> <span class="n">du</span><span class="o">.</span><span class="n">is_global_var</span><span class="p">(</span><span class="n">lhs</span><span class="p">):</span>
+        <span class="n">g_addr</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">value_of_global</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span>
+        <span class="n">new_name</span> <span class="o">=</span> <span class="s2">&quot;g_ptr_{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">api_name</span><span class="p">)</span>
+        <span class="n">MakeName</span><span class="p">(</span><span class="n">g_addr</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
+</pre></div>
+</td></tr></table></div>
+<p>The script assumes that the GUI cursor is within the function we are modifying.</p>
+<p>First we get a list of <code class="xref py py-class docutils literal notranslate"><span class="pre">callObj</span></code> objects representing all occurrences of a call to <code class="docutils literal notranslate"><span class="pre">GetProcAddress</span></code> (line 4). At line 7 we extract the value of their second arguments, that is, the string containing the API names. After checking that we are indeed dealing with an assignment (something of the form <code class="docutils literal notranslate"><span class="pre">global_var</span> <span class="pre">=</span> <span class="pre">call_to_func(x,</span> <span class="pre">y)</span></code>), we take the left hand side of the expression (line 13). If this is indeed a global variable, we rename it to match the API it is pointing to (lines 14-17).</p>
+<p>After executing the script the function will now look like this:</p>
+<div class="highlight-C notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="kr">__int64</span> <span class="nf">cgp_sneaky_direct_asg</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">HMODULE</span> <span class="n">v0</span><span class="p">;</span> <span class="c1">// rax</span>
+  <span class="n">HMODULE</span> <span class="n">v1</span><span class="p">;</span> <span class="c1">// rbx</span>
+
+  <span class="n">v0</span> <span class="o">=</span> <span class="n">sub_140065B68</span><span class="p">(</span><span class="s">&quot;comctl32.dll&quot;</span><span class="p">);</span>
+  <span class="n">v1</span> <span class="o">=</span> <span class="n">v0</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v0</span> <span class="p">)</span>
+    <span class="n">g_ptr_InitCommonControls</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">v0</span><span class="p">,</span> <span class="s">&quot;InitCommonControls&quot;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">g_ptr_InitCommonControls</span> <span class="o">=</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v1</span> <span class="p">)</span>
+    <span class="n">g_ptr_MakeDragList</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="s">&quot;MakeDragList&quot;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">g_ptr_MakeDragList</span> <span class="o">=</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v1</span> <span class="p">)</span>
+    <span class="n">g_ptr_LBItemFromPt</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="s">&quot;LBItemFromPt&quot;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">g_ptr_LBItemFromPt</span> <span class="o">=</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+  <span class="k">if</span> <span class="p">(</span> <span class="n">v1</span> <span class="p">)</span>
+    <span class="n">g_ptr_DrawInsert</span> <span class="o">=</span> <span class="n">GetProcAddress</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="s">&quot;DrawInsert&quot;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="n">g_ptr_DrawInsert</span> <span class="o">=</span> <span class="mi">0</span><span class="n">i64</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">g_ptr_InitCommonControls</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table></div>
+<p>You can find this script under <em>examples/getprocaddr_renaming_globals.py</em> in the source code distribution.</p>
+</div>
+<div class="section" id="a-more-complete-example">
+<h3>A more complete example<a class="headerlink" href="#a-more-complete-example" title="Permalink to this headline">¶</a></h3>
+<p>Let’s take a look at a contrived example to showcase a typical use of the FIDL API. The example has been taken from &#64;fabs0x0 presentation about Joern (a source code static analysis tool).</p>
+<p>The problem we are trying to solve is the following: find all the functions allocating memory using <code class="docutils literal notranslate"><span class="pre">malloc</span></code> in a way that its size can overflow, that is, of the form <code class="docutils literal notranslate"><span class="pre">len</span> <span class="pre">+</span> <span class="pre">imm</span></code>. Afterwards, find occurrences of <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> where the same variable <code class="docutils literal notranslate"><span class="pre">len</span></code> is used as a <em>size</em> parameter.</p>
+<p>The example script can be found on the <strong>examples</strong> directory of the source code distribution, along with the <em>IDB</em> file of a simple program implementing this potentially vulnerable code pattern. The same script is displayed below:</p>
+<div class="highlight-python notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="c1"># ---------------------------------------------------------------</span>
+<span class="c1"># Example from @fabs0x0 presentation about Joern</span>
+<span class="c1"># https://fabs.codeminers.org/talks/2019-joern.pdf</span>
+<span class="c1">#</span>
+<span class="c1"># Note: this example is deliberately verbose.</span>
+<span class="c1"># There are cleaner, leaner ways to implement this idea</span>
+<span class="c1"># but the objective here is to  showcase the API.</span>
+<span class="c1"># ---------------------------------------------------------------</span>
+
+<span class="kn">from</span> <span class="nn">ida_hexrays</span> <span class="kn">import</span> <span class="n">cot_add</span>
+<span class="kn">import</span> <span class="nn">FIDL.decompiler_utils</span> <span class="kn">as</span> <span class="nn">du</span>
+
+
+<span class="k">def</span> <span class="nf">find_possible_malloc_issues</span><span class="p">(</span><span class="n">c</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Searches for instances where malloc argument may wrap around</span>
+<span class="sd">    and there&#39;s a dangerous use of it in a memory write operation.</span>
+
+<span class="sd">    :param c: a :class:`controlFlowinator` object</span>
+<span class="sd">    :type c: :class:`controlFlowinator`</span>
+<span class="sd">    :return: a list of dict containing free-form information</span>
+<span class="sd">    :rtype: list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">suspicious_lens</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">mallocz</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">find_all_calls_to</span><span class="p">(</span><span class="s1">&#39;malloc&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">ea</span><span class="p">)</span>
+    <span class="n">memcpyz</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">find_all_calls_to</span><span class="p">(</span><span class="s1">&#39;memcpy&#39;</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">ea</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">mallocz</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">memcpyz</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+
+    <span class="c1"># Check whether the ``malloc`` call contains an arithmetic</span>
+    <span class="c1"># expression as function argument. We are only looking</span>
+    <span class="c1"># for additions in this case</span>
+    <span class="k">for</span> <span class="n">co</span> <span class="ow">in</span> <span class="n">mallocz</span><span class="p">:</span>
+        <span class="n">m_arg</span> <span class="o">=</span> <span class="n">co</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">m_arg</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s1">&#39;unk&#39;</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">is_ari</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">is_arithmetic_expression</span><span class="p">(</span>
+            <span class="n">m_arg</span><span class="o">.</span><span class="n">val</span><span class="p">,</span>
+            <span class="n">only_these</span><span class="o">=</span><span class="p">[</span><span class="n">cot_add</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">is_ari</span><span class="p">:</span>
+            <span class="c1"># Now, there are many ways to skin a cat...</span>
+            <span class="c1"># we&#39;ll use the following on this example.</span>
+            <span class="c1"># Assuming ``len + &lt;number&gt;`` -&gt; ``len``</span>
+            <span class="n">lhs</span> <span class="o">=</span> <span class="n">m_arg</span><span class="o">.</span><span class="n">val</span><span class="o">.</span><span class="n">x</span>  <span class="c1"># looking for var_ref_t</span>
+            <span class="n">rhs</span> <span class="o">=</span> <span class="n">m_arg</span><span class="o">.</span><span class="n">val</span><span class="o">.</span><span class="n">y</span>  <span class="c1"># looking for an immediate</span>
+
+            <span class="k">if</span> <span class="n">du</span><span class="o">.</span><span class="n">is_var</span><span class="p">(</span><span class="n">lhs</span><span class="p">)</span> <span class="ow">and</span> <span class="n">du</span><span class="o">.</span><span class="n">is_number</span><span class="p">(</span><span class="n">rhs</span><span class="p">):</span>
+                <span class="n">real_var</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">ref2var</span><span class="p">(</span><span class="n">ref</span><span class="o">=</span><span class="n">lhs</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+
+                <span class="c1"># This is not strictly necessary but it is</span>
+                <span class="c1"># recommended to use ``my_var_t`` objects if</span>
+                <span class="c1"># possible, since they contain a lot of useful</span>
+                <span class="c1"># properties/methods</span>
+                <span class="n">my_var</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">my_var_t</span><span class="p">(</span><span class="n">real_var</span><span class="p">)</span>
+
+                <span class="n">suspicious_lens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">my_var</span><span class="p">)</span>
+
+    <span class="c1"># Are there any of these &quot;suspicious&quot; length variables</span>
+    <span class="c1"># being used in a memcpy?</span>
+    <span class="k">for</span> <span class="n">lv</span> <span class="ow">in</span> <span class="n">suspicious_lens</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">co</span> <span class="ow">in</span> <span class="n">memcpyz</span><span class="p">:</span>
+            <span class="c1"># memcpy(src, dst, size)  // size: 3rd arg</span>
+            <span class="n">sv</span> <span class="o">=</span> <span class="n">co</span><span class="o">.</span><span class="n">args</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+            <span class="c1"># Checking whether the `size` parameter is a variable,</span>
+            <span class="c1"># it could be a constant as well...</span>
+            <span class="k">if</span> <span class="n">sv</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;var&#39;</span><span class="p">:</span>
+                <span class="n">v_name</span> <span class="o">=</span> <span class="n">sv</span><span class="o">.</span><span class="n">val</span><span class="o">.</span><span class="n">name</span>
+                <span class="c1"># Checking whether two local variables are the same</span>
+                <span class="c1"># is better done by comparing their names.</span>
+                <span class="k">if</span> <span class="n">lv</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="n">v_name</span><span class="p">:</span>
+                    <span class="n">res</span> <span class="o">=</span> <span class="p">{</span>
+                            <span class="s1">&#39;ea&#39;</span><span class="p">:</span> <span class="n">c</span><span class="o">.</span><span class="n">ea</span><span class="p">,</span>
+                            <span class="s1">&#39;msg&#39;</span><span class="p">:</span> <span class="s2">&quot;Check use of {} at {:X}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                <span class="n">lv</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                <span class="n">co</span><span class="o">.</span><span class="n">ea</span><span class="p">,</span>
+                                <span class="p">)}</span>
+                    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">results</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">du</span><span class="o">.</span><span class="n">do_for_all_funcs</span><span class="p">(</span>
+        <span class="n">find_possible_malloc_issues</span><span class="p">,</span>
+        <span class="n">min_size</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">fast</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">80</span>
+    <span class="k">print</span> <span class="n">results</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</td></tr></table></div>
+<p>As we can see, <a class="reference internal" href="#controlflowinator-label"><span class="std std-ref">The ControlFlowinator</span></a> object is indeed the central piece of this API. It is the only argument of the function <code class="docutils literal notranslate"><span class="pre">find_possible_malloc_issues</span></code> at line 14. The convenience function <code class="docutils literal notranslate"><span class="pre">do_for_all_funcs</span></code> (line 89) is used to iterate over all functions on a binary, calculate their <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> and call a function with it as parameter (see line 90) and the API documentation for more information about this wrapper.</p>
+<p>At lines 27, 28 all occurrences of calls to <code class="docutils literal notranslate"><span class="pre">malloc</span></code> and <code class="docutils literal notranslate"><span class="pre">memcpy</span></code> are calculated. The result of <code class="docutils literal notranslate"><span class="pre">find_all_calls_to</span></code> are so called <code class="docutils literal notranslate"><span class="pre">callObj</span></code>, a complex data structure containing a lot of information about the <em>call</em> (name, arguments, location, etc.)</p>
+<p>The argument of <code class="docutils literal notranslate"><span class="pre">malloc</span></code> is used as a parameter of <code class="docutils literal notranslate"><span class="pre">is_arithmetic_expression</span></code> (line 41), an auxiliary function returning a <em>boolean</em>, indicating whether the expression is arithmetic (that is, addition, substraction, multiplication, etc. or a combination of them). In this specific case we specify a second parameter to restrict the search to additions only.</p>
+<p>If an expression representing an addition (a + b) is found we extract their operands {a, b} (lines 49, 50). Afterwards, we check whether the operands are of the <em>type</em> we are looking for, that is, a variable and a number (line 52). If this is true, we have found one of these <code class="docutils literal notranslate"><span class="pre">len</span></code> variables of interest, so we create <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code> object and save it in a list for later usage (lines 59, 61). For more information on <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code> objects please refer to the <a class="reference internal" href="#local-variables-label"><span class="std std-ref">Local variables</span></a> section.</p>
+<p>Now that we have a list of <em>suspicious</em> <code class="docutils literal notranslate"><span class="pre">len</span></code> variables in this function is time to go over all calls to <code class="docutils literal notranslate"><span class="pre">memcpy</span></code>, get their third arguments (line 68) and get their names (line 73). This is done only in the case that the <em>size</em> parameter is a variable (line 72), since it could be a constant value as well.</p>
+<p>Finally, we compare the names of the two variables (line 76) and save the results in a JSON-like format to be returned at the end of the script’s execution.</p>
+<p>Running this over the example <em>IDB</em> provided, produces the expected result (line 6):</p>
+<div class="highlight-text notranslate"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="highlight"><pre><span></span>40118A: variable &#39;v17&#39; is possibly undefined
+&lt;snip...&gt;
+401C88: positive sp value 18 has been found
+401CBA: could not find valid save-restore pair for ebx
+================================================================================
+[{&#39;msg&#39;: &#39;Check use of len at 401030&#39;, &#39;ea&#39;: 4198400L}]
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="api.html" class="btn btn-neutral float-right" title="Core API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="gotchas.html" class="btn btn-neutral float-left" title="Known gotchas" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, FLARE&#39;s OTF
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
