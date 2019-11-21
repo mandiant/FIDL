@@ -39,5 +39,6 @@ In _development mode_, `pip` will install `pytest` and some linters helpful whil
 
 # Documentation
 
-You can find up to date documentation online [here](https://fidl.readthedocs.io/en/latest/)
+You can find up to date **documentation online** [here](https://fidl.readthedocs.io/en/latest/)
+
 The source distribution has built-in documentation [here](./FIDL/docs/_build/html/index.html)
