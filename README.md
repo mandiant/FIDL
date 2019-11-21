@@ -1,3 +1,5 @@
+[![Documentation Status](https://readthedocs.org/projects/fidl/badge/?version=latest)](https://fidl.readthedocs.io/en/latest/?badge=latest)
+
 <pre>
 ███████╗██╗██████╗ ██╗     
 ██╔════╝██║██╔══██╗██║     
@@ -35,24 +37,7 @@ __Development (editable) mode:__ `pip install -e .[dev]`
 In _development mode_, `pip` will install `pytest` and some linters helpful while developing, as well as creating symbolic links under python's packages directory instead of copying FIDL to it. This allows you to modify your `.py` files and test on the fly, without needing to reinstall every time you make a change :)
 
 
-# Running tests
-
-Load the test IDB `putty.i64` (under tests/data) in IDA.
-Now simply execute the `pytest_fidl.py` script (under tests) from within IDA (Alt + F7)
-
-
-# NOTE
-
-To import _FIDL_ into your own programs, use the uppercase form of the name, that is:
-
-`import FIDL` or `import FIDL.decompiler_utils as du` will work but
-
-`import fidl` will result in an import error
-
-
 # Documentation
 
-There is built-in documentation [here](./FIDL/docs/_build/html/index.html)
-
-
-
+You can find up to date documentation online [here](https://fidl.readthedocs.io/en/latest/)
+The source distribution has built-in documentation [here](./FIDL/docs/_build/html/index.html)
