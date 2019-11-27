@@ -30,7 +30,7 @@ def main():
             value = getattr(ih, name)
             f.write("m.{} = {}\n".format(name, value))
 
-    print "Done."
+    print("Done.")
 
 
 if __name__ == '__main__':
