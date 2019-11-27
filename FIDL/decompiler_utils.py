@@ -21,9 +21,9 @@ from idautils import *
 
 import ida_hexrays
 
-from compiler_consts import expr_condition
-from compiler_consts import expr_ctype  # To pretty print debug messages
-from compiler_consts import expr_final, expr_assignments, insn_conditions
+from FIDL.compiler_consts import expr_condition
+from FIDL.compiler_consts import expr_ctype  # To pretty print debug messages
+from FIDL.compiler_consts import expr_final, expr_assignments, insn_conditions
 
 import random
 import traceback
