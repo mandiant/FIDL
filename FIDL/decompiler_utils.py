@@ -46,6 +46,12 @@ def dprint(s=""):
     if DEBUG:
         print(s)
 
+# networkx expects nodes to be hashable. We monkey patch some of IDA's type to
+# implement the __hash__ method so they can be used as nodes.
+_hash_from_obj_id = lambda self: hash(self.obj_id)
+cexpr_t.__hash__ = _hash_from_obj_id
+cinsn_t.__hash__ = _hash_from_obj_id
+carg_t.__hash__ = _hash_from_obj_id
 
 def debug_get_break_statements(c):
     for n in c.g.nodes():
