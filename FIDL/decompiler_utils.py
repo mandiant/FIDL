@@ -25,6 +25,7 @@ from compiler_consts import expr_condition
 from compiler_consts import expr_ctype  # To pretty print debug messages
 from compiler_consts import expr_final, expr_assignments, insn_conditions
 
+import os
 import random
 import traceback
 import networkx as nx
@@ -1966,7 +1967,7 @@ class controlFlowinator:
         dot += "}\n"
 
         print("[DEBUG] Writing DOT file...")
-        od = "{}\\decompiled.dot".format(out_dir)
+        od = os.path.join(out_dir, "decompiled.dot")
         with open(od, 'wb') as f:
             f.write(dot)
 
@@ -1995,10 +1996,11 @@ def get_cfg_for_ea(ea, dot_exe, out_dir):
 
     c.dump_cfg(out_dir)
 
-    cmd = r"{dot_exe} -Tpng -o {out_dir}\decompiled.png {out_dir}\decompiled.dot".format(
+    cmd = "{dot_exe} -Tpng -o '{png_file}' '{dot_file}'".format(
         dot_exe=dot_exe,
-        out_dir=out_dir)
-    cmd2 = r"{out_dir}\decompiled.png".format(out_dir=out_dir)
+        dot_file=os.path.join(out_dir, "decompiled.dot"),
+        png_file=os.path.join(out_dir, "decompiled.png"))
+    cmd2 = os.path.join(out_dir, "decompiled.png")
 
     print("Trying to run: {}...".format(cmd))
     os.system(cmd)
