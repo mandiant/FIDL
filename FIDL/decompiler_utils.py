@@ -941,9 +941,9 @@ def string_value(ins):
         raise TypeError
 
     str_ea = ins.obj_ea
-    str_type = GetStringType(str_ea) & 0xF
+    str_type = get_str_type(str_ea) & 0xF
 
-    return GetString(ea=str_ea, strtype=str_type)
+    return get_strlit_contents(str_ea, -1, str_type)
 
 
 def is_var(ins):
@@ -2152,7 +2152,7 @@ class callObj:
         """
 
         tif = tinfo_t()
-        get_tinfo2(self.call_ea, tif) or guess_tinfo2(self.call_ea, tif)
+        get_tinfo(tif, self.call_ea) or guess_tinfo(tif, self.call_ea)
         self.ret_type = tif.get_rettype()
 
     def __repr__(self):
