@@ -2242,7 +2242,7 @@ def find_all_calls_to(f_name, ea):
     searching for ``malloc`` will match as well ``_malloc``, ``malloc_0``, etc.
 
     :param f_name: the function name to search for
-    :type f_name: string, optional
+    :type f_name: string
     :param ea: any address within the function that may contain the calls
     :type ea: int
     :return: a list of :class:`callObj`
