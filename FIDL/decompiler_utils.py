@@ -29,6 +29,7 @@ import random
 import traceback
 import networkx as nx
 from collections import namedtuple, defaultdict
+from six.moves import xrange
 
 DEBUG = False
 

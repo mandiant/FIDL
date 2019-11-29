@@ -22,6 +22,7 @@ setup(name='FIDL',
       license='MIT',
       install_requires=[
         'networkx',
+        'six',
       ],
       extras_require={
         'dev': [
