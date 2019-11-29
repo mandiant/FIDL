@@ -1,4 +1,10 @@
+[![GitHub](https://img.shields.io/github/license/fireeye/FIDL)](https://en.wikipedia.org/wiki/MIT_License)
+![PyPI - Status](https://img.shields.io/pypi/status/FIDL)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/fireeye/FIDL)](https://github.com/fireeye/FIDL/releases)
+[![PyPI](https://img.shields.io/pypi/v/FIDL.svg)](https://pypi.org/project/FIDL)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fidl)](https://pypi.org/project/FIDL)
 [![Documentation Status](https://readthedocs.org/projects/fidl/badge/?version=latest)](https://fidl.readthedocs.io/en/latest/?badge=latest)
+
 
 <pre>
 ███████╗██╗██████╗ ██╗     
