@@ -1975,7 +1975,7 @@ class controlFlowinator:
         print("[DEBUG] Writing DOT file...")
         od = "{}\\decompiled.dot".format(out_dir)
         with open(od, 'wb') as f:
-            f.write(dot)
+            f.write(bytes(bytearray(dot, "utf-8")))
 
         print("[DEBUG] Done.")
 
