@@ -21,15 +21,16 @@ from idautils import *
 
 import ida_hexrays
 
-from compiler_consts import expr_condition
-from compiler_consts import expr_ctype  # To pretty print debug messages
-from compiler_consts import expr_final, expr_assignments, insn_conditions
+from FIDL.compiler_consts import expr_condition
+from FIDL.compiler_consts import expr_ctype  # To pretty print debug messages
+from FIDL.compiler_consts import expr_final, expr_assignments, insn_conditions
 
 import os
 import random
 import traceback
 import networkx as nx
 from collections import namedtuple, defaultdict
+from six.moves import xrange
 
 DEBUG = False
 
@@ -45,6 +46,14 @@ def dprint(s=""):
     """
     if DEBUG:
         print(s)
+
+
+# networkx expects nodes to be hashable. We monkey patch some of IDA's type to
+# implement the __hash__ method so they can be used as nodes.
+_hash_from_obj_id = lambda self: hash(self.obj_id)
+ida_hexrays.cexpr_t.__hash__ = _hash_from_obj_id
+ida_hexrays.cinsn_t.__hash__ = _hash_from_obj_id
+ida_hexrays.carg_t.__hash__ = _hash_from_obj_id
 
 
 def debug_get_break_statements(c):
@@ -89,7 +98,7 @@ def NonLibFunctions(start_ea=None, min_size=0):
     """
 
     for f_ea in Functions(start=start_ea):
-        flags = GetFunctionFlags(f_ea)
+        flags = get_func_attr(f_ea, FUNCATTR_FLAGS)
         if flags & FUNC_LIB or flags & FUNC_THUNK:
             continue
 
@@ -935,9 +944,11 @@ def string_value(ins):
         raise TypeError
 
     str_ea = ins.obj_ea
-    str_type = GetStringType(str_ea) & 0xF
+    str_type = get_str_type(str_ea) & 0xF
 
-    return GetString(ea=str_ea, strtype=str_type)
+    # Python 3: get_strlit_contents returns bytes now
+    str_b = get_strlit_contents(str_ea, -1, str_type)
+    return str_b.decode('utf-8')
 
 
 def is_var(ins):
@@ -1969,7 +1980,7 @@ class controlFlowinator:
         print("[DEBUG] Writing DOT file...")
         od = os.path.join(out_dir, "decompiled.dot")
         with open(od, 'wb') as f:
-            f.write(dot)
+            f.write(bytes(bytearray(dot, "utf-8")))
 
         print("[DEBUG] Done.")
 
@@ -2147,7 +2158,7 @@ class callObj:
         """
 
         tif = tinfo_t()
-        get_tinfo2(self.call_ea, tif) or guess_tinfo2(self.call_ea, tif)
+        get_tinfo(tif, self.call_ea) or guess_tinfo(tif, self.call_ea)
         self.ret_type = tif.get_rettype()
 
     def __repr__(self):

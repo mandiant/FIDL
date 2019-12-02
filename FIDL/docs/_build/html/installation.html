@@ -165,13 +165,12 @@
 <div class="section" id="install-from-source">
 <h2>Install from source<a class="headerlink" href="#install-from-source" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p class="first">cd to the repository’s directory containing setup.py</p>
-</li>
-<li><p class="first">Use your installation’s Pip:</p>
+<li><p>cd to the repository’s directory containing setup.py</p></li>
+<li><p>Use your installation’s Pip:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span></code> (for <em>Release</em> mode)</li>
-<li><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.[dev]</span></code> (for <em>Development/Editable</em> mode)</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">.</span></code> (for <em>Release</em> mode)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.[dev]</span></code> (for <em>Development/Editable</em> mode)</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -182,12 +181,18 @@
 <h2>Install from PyPi<a class="headerlink" href="#install-from-pypi" title="Permalink to this headline">¶</a></h2>
 <p>FIDL is in PyPi. If you are able to reach PyPi, installing is as easy as:</p>
 <blockquote>
-<div><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">FIDL</span></code></div></blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">FIDL</span></code></p>
+</div></blockquote>
 </div>
 <div class="section" id="running-tests">
 <h2>Running tests<a class="headerlink" href="#running-tests" title="Permalink to this headline">¶</a></h2>
 <p>Load the test IDB <code class="docutils literal notranslate"><span class="pre">putty.i64</span></code> (under <em>tests/data</em>) in IDA.</p>
 <p>Now simply execute the <code class="docutils literal notranslate"><span class="pre">pytest_fidl.py</span></code> script (under <em>tests</em>) from within IDA (<code class="docutils literal notranslate"><span class="pre">Alt</span> <span class="pre">+</span> <span class="pre">F7</span></code>)</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is an issue related to testing with Pytest in Python3.
+Tests are not working for IDA with Python3 at the moment.</p>
+</div>
 </div>
 </div>
 

@@ -91,8 +91,8 @@ def main():
         min_size=0,
         fast=False)
 
-    print "=" * 80
-    print results
+    print("=" * 80)
+    print(results)
 
 
 if __name__ == '__main__':

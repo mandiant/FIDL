@@ -159,7 +159,7 @@
   <div class="section" id="core-api">
 <span id="api-label"></span><h1>Core API<a class="headerlink" href="#core-api" title="Permalink to this headline">¶</a></h1>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.</span></p>
+<p><span class="versionmodified added">New in version 1.0.</span></p>
 </div>
 <p>This section documents the FIDL core API, and it’s intended for developers
 of IDA plugins</p>
@@ -167,196 +167,172 @@ of IDA plugins</p>
 <span id="api-overview"></span><h2>API Overview<a class="headerlink" href="#module-decompiler_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="decompiler_utils.BBGraph">
-<em class="property">class </em><code class="descclassname">decompiler_utils.</code><code class="descname">BBGraph</code><span class="sig-paren">(</span><em>f_ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.BBGraph" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">BBGraph</code><span class="sig-paren">(</span><em class="sig-param">f_ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.BBGraph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Representation of the assembly CFG for a function</p>
 <dl class="method">
 <dt id="decompiler_utils.BBGraph.find_connected_paths">
-<code class="descname">find_connected_paths</code><span class="sig-paren">(</span><em>bb_start</em>, <em>bb_end</em>, <em>co=10</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.BBGraph.find_connected_paths" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">find_connected_paths</code><span class="sig-paren">(</span><em class="sig-param">bb_start</em>, <em class="sig-param">bb_end</em>, <em class="sig-param">co=10</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.BBGraph.find_connected_paths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Leverages NetworkX to find all connected paths</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>bb_start</strong> (<em>Basic block</em>) – Initial basic block</li>
-<li><strong>bb_end</strong> (<em>Basic block</em>) – Final basic block</li>
-<li><strong>co</strong> (<em>int</em><em>, </em><em>optional</em>) – Cutoff parameter</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bb_start</strong> (<em>Basic block</em>) – Initial basic block</p></li>
+<li><p><strong>bb_end</strong> (<em>Basic block</em>) – Final basic block</p></li>
+<li><p><strong>co</strong> (<em>int</em><em>, </em><em>optional</em>) – Cutoff parameter</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <p>NOTE: the cutoff parameter in <code class="xref py py-class docutils literal notranslate"><span class="pre">nx.all_simple_paths</span></code> serves         two purposes:</p>
 <ul class="simple">
-<li>reduce the chances of CPU melting (algo is O(n!))</li>
-<li>nobody will inspect (manually) monstruous paths</li>
+<li><p>reduce the chances of CPU melting (algo is O(n!))</p></li>
+<li><p>nobody will inspect (manually) monstruous paths</p></li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">generator of lists or None</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>generator of lists or None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="decompiler_utils.BBGraph.get_node">
-<code class="descname">get_node</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.BBGraph.get_node" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_node</code><span class="sig-paren">(</span><em class="sig-param">addr</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.BBGraph.get_node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a function’s address, returns the basic block (address) that         contains it (or None)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>addr</strong> (<em>int</em>) – address within a function</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Address of the node containing the input address</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>addr</strong> (<em>int</em>) – address within a function</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Address of the node containing the input address</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.NonLibFunctions">
-<code class="descclassname">decompiler_utils.</code><code class="descname">NonLibFunctions</code><span class="sig-paren">(</span><em>start_ea=None</em>, <em>min_size=0</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.NonLibFunctions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">NonLibFunctions</code><span class="sig-paren">(</span><em class="sig-param">start_ea=None</em>, <em class="sig-param">min_size=0</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.NonLibFunctions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generator yielding only non-lib functions</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>start_ea</strong> (<em>int</em><em>, </em><em>optional</em>) – Address to start looking for non-library functions.</li>
-<li><strong>min_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum function size. Useful to filter small,     uninteresting functions.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_ea</strong> (<em>int</em><em>, </em><em>optional</em>) – Address to start looking for non-library functions.</p></li>
+<li><p><strong>min_size</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum function size. Useful to filter small,     uninteresting functions.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.all_paths_between">
-<code class="descclassname">decompiler_utils.</code><code class="descname">all_paths_between</code><span class="sig-paren">(</span><em>c</em>, <em>start_node=None</em>, <em>end_node=None</em>, <em>co=40</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.all_paths_between" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">all_paths_between</code><span class="sig-paren">(</span><em class="sig-param">c</em>, <em class="sig-param">start_node=None</em>, <em class="sig-param">end_node=None</em>, <em class="sig-param">co=40</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.all_paths_between" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculates all paths between <code class="docutils literal notranslate"><span class="pre">start_node</span></code> and <code class="docutils literal notranslate"><span class="pre">end_node</span></code></p>
 <p>Calculating paths is one of these things that     is better done with the paralell index graph (<code class="docutils literal notranslate"><span class="pre">c.i_cfg</span></code>)     It haywires when done with complex elements.</p>
 <p>FIXME: the co (cutoff) param is necessary to avoid complexity
 explosion. However, there is a problem if it’s reached…</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</li>
-<li><strong>start_node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</li>
-<li><strong>start_node</strong> – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</li>
-<li><strong>co</strong> (<em>int</em><em>, </em><em>optional</em>) – the <em>cutoff</em> value controls the maximum path length.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</p></li>
+<li><p><strong>start_node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</p></li>
+<li><p><strong>start_node</strong> – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</p></li>
+<li><p><strong>co</strong> (<em>int</em><em>, </em><em>optional</em>) – the <em>cutoff</em> value controls the maximum path length.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">it <strong>yields</strong> a list of nodes for each path</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>it <strong>yields</strong> a list of nodes for each path</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.assigns_to_var">
-<code class="descclassname">decompiler_utils.</code><code class="descname">assigns_to_var</code><span class="sig-paren">(</span><em>cex</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.assigns_to_var" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">assigns_to_var</code><span class="sig-paren">(</span><em class="sig-param">cex</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.assigns_to_var" title="Permalink to this definition">¶</a></dt>
 <dd><p>Does this :class:<code class="docutils literal notranslate"><span class="pre">cexpr_t</span></code> assign a value to any variable?</p>
 <p>TODO: this is limited for now to expressions of the type:</p>
 <blockquote>
-<div><code class="docutils literal notranslate"><span class="pre">v1</span> <span class="pre">=</span> <span class="pre">something</span> <span class="pre">something</span></code></div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> object</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the assigned var index (to <code class="docutils literal notranslate"><span class="pre">cf.lvars</span></code> array) or -1 if the     <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> does not assign to any variable</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
-</tr>
-</tbody>
-</table>
+<div><p><code class="docutils literal notranslate"><span class="pre">v1</span> <span class="pre">=</span> <span class="pre">something</span> <span class="pre">something</span></code></p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the assigned var index (to <code class="docutils literal notranslate"><span class="pre">cf.lvars</span></code> array) or -1 if the     <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> does not assign to any variable</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.blowup_expression">
-<code class="descclassname">decompiler_utils.</code><code class="descname">blowup_expression</code><span class="sig-paren">(</span><em>cex</em>, <em>final_operands=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.blowup_expression" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">blowup_expression</code><span class="sig-paren">(</span><em class="sig-param">cex</em>, <em class="sig-param">final_operands=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.blowup_expression" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts all elements of an expression</p>
 <p>Ex: <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">+</span> <span class="pre">1</span> <span class="pre">&lt;</span> <span class="pre">y</span></code> -&gt; <code class="docutils literal notranslate"><span class="pre">{x,</span> <span class="pre">1,</span> <span class="pre">y}</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> object</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a <em>set</em> of elements (the <em>final_operands</em>)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">set</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <em>set</em> of elements (the <em>final_operands</em>)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="class">
 <dt id="decompiler_utils.cImporter">
-<em class="property">class </em><code class="descclassname">decompiler_utils.</code><code class="descname">cImporter</code><a class="headerlink" href="#decompiler_utils.cImporter" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">cImporter</code><a class="headerlink" href="#decompiler_utils.cImporter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect import information</p>
 <p>This is mainly to work around the fact that :func:<code class="docutils literal notranslate"><span class="pre">get_func_name</span></code> does     not resolve imports…</p>
 <dl class="method">
 <dt id="decompiler_utils.cImporter.get_imports_info">
-<code class="descname">get_imports_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.cImporter.get_imports_info" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_imports_info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.cImporter.get_imports_info" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="class">
 <dt id="decompiler_utils.callObj">
-<em class="property">class </em><code class="descclassname">decompiler_utils.</code><code class="descname">callObj</code><span class="sig-paren">(</span><em>c=None</em>, <em>name=''</em>, <em>node=None</em>, <em>expr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.callObj" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">callObj</code><span class="sig-paren">(</span><em class="sig-param">c=None</em>, <em class="sig-param">name=''</em>, <em class="sig-param">node=None</em>, <em class="sig-param">expr=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.callObj" title="Permalink to this definition">¶</a></dt>
 <dd><p>Auxiliary object for code clarity.</p>
 <p>It represents the occurrence of a <code class="docutils literal notranslate"><span class="pre">call</span></code> expression.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>name</strong> (<em>string</em><em>, </em><em>optional</em>) – name of the function called</li>
-<li><strong>node</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node containing the call expression</li>
-<li><strong>expr</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – the <code class="docutils literal notranslate"><span class="pre">call</span></code> expression element</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>string</em><em>, </em><em>optional</em>) – name of the function called</p></li>
+<li><p><strong>node</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node containing the call expression</p></li>
+<li><p><strong>expr</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – the <code class="docutils literal notranslate"><span class="pre">call</span></code> expression element</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.citem2higher">
-<code class="descclassname">decompiler_utils.</code><code class="descname">citem2higher</code><span class="sig-paren">(</span><em>citem</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.citem2higher" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">citem2higher</code><span class="sig-paren">(</span><em class="sig-param">citem</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.citem2higher" title="Permalink to this definition">¶</a></dt>
 <dd><p>This gets the higher representation of a given :class:<code class="docutils literal notranslate"><span class="pre">citem</span></code>,     that is, a :class:<code class="docutils literal notranslate"><span class="pre">cinsn_t</span></code> or :class:<code class="docutils literal notranslate"><span class="pre">cexpr_t</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>citem</strong> (:class:<code class="docutils literal notranslate"><span class="pre">citem</span></code>) – a :class:<code class="docutils literal notranslate"><span class="pre">citem</span></code> object</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>citem</strong> (:class:<code class="docutils literal notranslate"><span class="pre">citem</span></code>) – a :class:<code class="docutils literal notranslate"><span class="pre">citem</span></code> object</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="class">
 <dt id="decompiler_utils.controlFlowinator">
-<em class="property">class </em><code class="descclassname">decompiler_utils.</code><code class="descname">controlFlowinator</code><span class="sig-paren">(</span><em>ea=None</em>, <em>fast=True</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.controlFlowinator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">controlFlowinator</code><span class="sig-paren">(</span><em class="sig-param">ea=None</em>, <em class="sig-param">fast=True</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.controlFlowinator" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is the main object of FIDL’s API.</p>
 <p>It finds all decompiled code “blocks” and recreates a CFG based
 on this information.</p>
@@ -367,21 +343,17 @@ of :class:<code class="docutils literal notranslate"><span class="pre">citem</sp
 constructed. These are rather cost intensive, so they are
 turned off by default. Use <code class="docutils literal notranslate"><span class="pre">fast=False</span></code> to apply these
 and get a better CFG.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ea</strong> (<em>int</em>) – address of the function to analyze</li>
-<li><strong>fast</strong> (<em>bool</em>) – Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> for an object with richer information</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ea</strong> (<em>int</em>) – address of the function to analyze</p></li>
+<li><p><strong>fast</strong> (<em>bool</em>) – Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> for an object with richer information</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="decompiler_utils.controlFlowinator.dump_cfg">
-<code class="descname">dump_cfg</code><span class="sig-paren">(</span><em>out_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.controlFlowinator.dump_cfg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dump_cfg</code><span class="sig-paren">(</span><em class="sig-param">out_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.controlFlowinator.dump_cfg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dump the CFG for debugging purposes</p>
 <p>This dumps a representation of the CFG in DOT format.
 To generate an image:</p>
@@ -390,7 +362,7 @@ To generate an image:</p>
 
 <dl class="method">
 <dt id="decompiler_utils.controlFlowinator.dump_i_cfg">
-<code class="descname">dump_i_cfg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.controlFlowinator.dump_i_cfg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dump_i_cfg</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.controlFlowinator.dump_i_cfg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dump interim CFG for debugging purposes</p>
 </dd></dl>
 
@@ -398,509 +370,449 @@ To generate an image:</p>
 
 <dl class="function">
 <dt id="decompiler_utils.create_comment">
-<code class="descclassname">decompiler_utils.</code><code class="descname">create_comment</code><span class="sig-paren">(</span><em>c=None</em>, <em>ea=0</em>, <em>comment=''</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.create_comment" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">create_comment</code><span class="sig-paren">(</span><em class="sig-param">c=None</em>, <em class="sig-param">ea=0</em>, <em class="sig-param">comment=''</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.create_comment" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays a comment at the line corresponding to <code class="docutils literal notranslate"><span class="pre">ea</span></code></p>
 <p>TODO: avoid creating orphan comment in case the mapping
 from <code class="docutils literal notranslate"><span class="pre">ea</span></code> to decompiled code fails</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</li>
-<li><strong>ea</strong> (<em>int</em>) – address for the comment</li>
-<li><strong>comment</strong> (<em>string</em>) – the comment to add</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</p></li>
+<li><p><strong>ea</strong> (<em>int</em>) – address for the comment</p></li>
+<li><p><strong>comment</strong> (<em>string</em>) – the comment to add</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.debug_blownup_expressions">
-<code class="descclassname">decompiler_utils.</code><code class="descname">debug_blownup_expressions</code><span class="sig-paren">(</span><em>c=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.debug_blownup_expressions" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">debug_blownup_expressions</code><span class="sig-paren">(</span><em class="sig-param">c=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.debug_blownup_expressions" title="Permalink to this definition">¶</a></dt>
 <dd><p>Debugging helper.</p>
 <p>Show all blown up expressions for this function.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.debug_get_break_statements">
-<code class="descclassname">decompiler_utils.</code><code class="descname">debug_get_break_statements</code><span class="sig-paren">(</span><em>c</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.debug_get_break_statements" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">debug_get_break_statements</code><span class="sig-paren">(</span><em class="sig-param">c</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.debug_get_break_statements" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.debug_stahp">
-<code class="descclassname">decompiler_utils.</code><code class="descname">debug_stahp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.debug_stahp" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">debug_stahp</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.debug_stahp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Toggles <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> value, useful for testing</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.decast">
-<code class="descclassname">decompiler_utils.</code><code class="descname">decast</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.decast" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">decast</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.decast" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove the <code class="docutils literal notranslate"><span class="pre">cast</span></code>, returning the casted element</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.display_all_calls_to">
-<code class="descclassname">decompiler_utils.</code><code class="descname">display_all_calls_to</code><span class="sig-paren">(</span><em>func_name</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.display_all_calls_to" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">display_all_calls_to</code><span class="sig-paren">(</span><em class="sig-param">func_name</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.display_all_calls_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapping <a class="reference internal" href="#decompiler_utils.display_line_at" title="decompiler_utils.display_line_at"><code class="xref py py-func docutils literal notranslate"><span class="pre">display_line_at()</span></code></a> since this is the most common use of this API</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>func_name</strong> (<em>string</em>) – name of the function to search references</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>func_name</strong> (<em>string</em>) – name of the function to search references</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.display_line_at">
-<code class="descclassname">decompiler_utils.</code><code class="descname">display_line_at</code><span class="sig-paren">(</span><em>ea</em>, <em>silent=False</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.display_line_at" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">display_line_at</code><span class="sig-paren">(</span><em class="sig-param">ea</em>, <em class="sig-param">silent=False</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.display_line_at" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays the line of pseudocode corresponding to <code class="docutils literal notranslate"><span class="pre">ea</span></code></p>
 <p>This is useful to quickly answer questions like:</p>
 <blockquote>
 <div><ul class="simple">
-<li>“Is this function always called with its first parameter being a constant?”</li>
-<li>“I want to see all the error messages displayed by this function”</li>
-<li>etc.</li>
+<li><p>“Is this function always called with its first parameter being a constant?”</p></li>
+<li><p>“I want to see all the error messages displayed by this function”</p></li>
+<li><p>etc.</p></li>
 </ul>
 </div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ea</strong> (<em>int</em>) – address of an element contained within the line to display</li>
-<li><strong>silent</strong> (<em>bool</em>) – flag controlling verbose output</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ea</strong> (<em>int</em>) – address of an element contained within the line to display</p></li>
+<li><p><strong>silent</strong> (<em>bool</em>) – flag controlling verbose output</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.display_node">
-<code class="descclassname">decompiler_utils.</code><code class="descname">display_node</code><span class="sig-paren">(</span><em>c=None</em>, <em>node=None</em>, <em>color=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.display_node" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">display_node</code><span class="sig-paren">(</span><em class="sig-param">c=None</em>, <em class="sig-param">node=None</em>, <em class="sig-param">color=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.display_node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays a given node in the <code class="docutils literal notranslate"><span class="pre">pseudoviewer</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</li>
-<li><strong>node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</li>
-<li><strong>color</strong> (<em>int</em><em>, </em><em>optional</em>) – color to mark the line of code corresponding to <cite>node</cite></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</p></li>
+<li><p><strong>node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</p></li>
+<li><p><strong>color</strong> (<em>int</em><em>, </em><em>optional</em>) – color to mark the line of code corresponding to <cite>node</cite></p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.display_path">
-<code class="descclassname">decompiler_utils.</code><code class="descname">display_path</code><span class="sig-paren">(</span><em>cf=None</em>, <em>path=None</em>, <em>color=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.display_path" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">display_path</code><span class="sig-paren">(</span><em class="sig-param">cf=None</em>, <em class="sig-param">path=None</em>, <em class="sig-param">color=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.display_path" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shows a path’s code and colors its lines.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cf</strong> (an <code class="xref py py-class docutils literal notranslate"><span class="pre">cfunc_t</span></code> object, optional) – a decompilation object</li>
-<li><strong>path</strong> (<em>list</em>) – a list of :<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> nodes</li>
-<li><strong>color</strong> (<em>int</em><em>, </em><em>optional</em>) – color to mark the lines of code corresponding to <cite>path</cite></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cf</strong> (an <code class="xref py py-class docutils literal notranslate"><span class="pre">cfunc_t</span></code> object, optional) – a decompilation object</p></li>
+<li><p><strong>path</strong> (<em>list</em>) – a list of :<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> nodes</p></li>
+<li><p><strong>color</strong> (<em>int</em><em>, </em><em>optional</em>) – color to mark the lines of code corresponding to <cite>path</cite></p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of function lines (path nodes)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of function lines (path nodes)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.do_for_all_funcs">
-<code class="descclassname">decompiler_utils.</code><code class="descname">do_for_all_funcs</code><span class="sig-paren">(</span><em>func</em>, <em>fast=True</em>, <em>start_ea=None</em>, <em>blacklist=None</em>, <em>min_size=100</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.do_for_all_funcs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">do_for_all_funcs</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">fast=True</em>, <em class="sig-param">start_ea=None</em>, <em class="sig-param">blacklist=None</em>, <em class="sig-param">min_size=100</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.do_for_all_funcs" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a generic wrapper for all kinds of logic that we want to apply     to all the functions in the binary.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>func</strong> (<em>function</em>) – function “pointer” performing the analysis.     Its only mandatory argument is a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object.</li>
-<li><strong>fast</strong> (<em>boolean</em><em>, </em><em>optional</em>) – parameter fast for the <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object.</li>
-<li><strong>start_ea</strong> (<em>int</em><em>, </em><em>optional</em>) – Address to start looking for non-library functions.</li>
-<li><strong>blacklist</strong> (<em>function</em><em>, </em><em>optional</em>) – a function determining whether to process a function.    Implemented via dependency injection.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>func</strong> (<em>function</em>) – function “pointer” performing the analysis.     Its only mandatory argument is a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object.</p></li>
+<li><p><strong>fast</strong> (<em>boolean</em><em>, </em><em>optional</em>) – parameter fast for the <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object.</p></li>
+<li><p><strong>start_ea</strong> (<em>int</em><em>, </em><em>optional</em>) – Address to start looking for non-library functions.</p></li>
+<li><p><strong>blacklist</strong> (<em>function</em><em>, </em><em>optional</em>) – a function determining whether to process a function.    Implemented via dependency injection.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">A list of JSON-like messages (individual function results)</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A list of JSON-like messages (individual function results)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.does_constrain">
-<code class="descclassname">decompiler_utils.</code><code class="descname">does_constrain</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.does_constrain" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">does_constrain</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.does_constrain" title="Permalink to this definition">¶</a></dt>
 <dd><p>This tries to answer the question: “Does this <code class="docutils literal notranslate"><span class="pre">node</span></code> constrains variables in any way?”</p>
 <p>Essentially it is looking for the occurrence of variables within known     <em>constrainer constructs</em>, eg. inside an <code class="docutils literal notranslate"><span class="pre">if</span></code> condition.</p>
 <p>TODO: many more heuristics can be included here</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – typically a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a set of variable indexes (to <code class="docutils literal notranslate"><span class="pre">cf.lvars</span></code> array)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">set</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – typically a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a set of variable indexes (to <code class="docutils literal notranslate"><span class="pre">cf.lvars</span></code> array)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.dprint">
-<code class="descclassname">decompiler_utils.</code><code class="descname">dprint</code><span class="sig-paren">(</span><em>s=''</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.dprint" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">dprint</code><span class="sig-paren">(</span><em class="sig-param">s=''</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.dprint" title="Permalink to this definition">¶</a></dt>
 <dd><p>This will print a debug message only if debugging is active</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>s</strong> (<em>str</em><em>, </em><em>optional</em>) – The debug message</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>s</strong> (<em>str</em><em>, </em><em>optional</em>) – The debug message</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.dump_lvars">
-<code class="descclassname">decompiler_utils.</code><code class="descname">dump_lvars</code><span class="sig-paren">(</span><em>ea=0</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.dump_lvars" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">dump_lvars</code><span class="sig-paren">(</span><em class="sig-param">ea=0</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.dump_lvars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Debugging helper.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.dump_pseudocode">
-<code class="descclassname">decompiler_utils.</code><code class="descname">dump_pseudocode</code><span class="sig-paren">(</span><em>ea=0</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.dump_pseudocode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">dump_pseudocode</code><span class="sig-paren">(</span><em class="sig-param">ea=0</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.dump_pseudocode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Debugging helper.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.find_all_calls_to">
-<code class="descclassname">decompiler_utils.</code><code class="descname">find_all_calls_to</code><span class="sig-paren">(</span><em>f_name</em>, <em>ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.find_all_calls_to" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">find_all_calls_to</code><span class="sig-paren">(</span><em class="sig-param">f_name</em>, <em class="sig-param">ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.find_all_calls_to" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds all calls to a function with the given name     within the function containing the <code class="docutils literal notranslate"><span class="pre">ea</span></code> address.</p>
 <p>Note that the string comparison is relaxed to find variants of it, that is,
 searching for <code class="docutils literal notranslate"><span class="pre">malloc</span></code> will match as well <code class="docutils literal notranslate"><span class="pre">_malloc</span></code>, <code class="docutils literal notranslate"><span class="pre">malloc_0</span></code>, etc.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>f_name</strong> (<em>string</em><em>, </em><em>optional</em>) – the function name to search for</li>
-<li><strong>ea</strong> (<em>int</em>) – any address within the function that may contain the calls</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f_name</strong> (<em>string</em>) – the function name to search for</p></li>
+<li><p><strong>ea</strong> (<em>int</em>) – any address within the function that may contain the calls</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of <a class="reference internal" href="#decompiler_utils.callObj" title="decompiler_utils.callObj"><code class="xref py py-class docutils literal notranslate"><span class="pre">callObj</span></code></a></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of <a class="reference internal" href="#decompiler_utils.callObj" title="decompiler_utils.callObj"><code class="xref py py-class docutils literal notranslate"><span class="pre">callObj</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.find_elements_of_type">
-<code class="descclassname">decompiler_utils.</code><code class="descname">find_elements_of_type</code><span class="sig-paren">(</span><em>cex</em>, <em>element_type</em>, <em>elements=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.find_elements_of_type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">find_elements_of_type</code><span class="sig-paren">(</span><em class="sig-param">cex</em>, <em class="sig-param">element_type</em>, <em class="sig-param">elements=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.find_elements_of_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Recursively extracts expression elements until     a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> from a specific group is found</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> object</li>
-<li><strong>element_type</strong> (a <code class="docutils literal notranslate"><span class="pre">cot_xxx</span></code> value (eg. <code class="docutils literal notranslate"><span class="pre">cot_add</span></code>)) – the type of element we are looking for     (as a <code class="docutils literal notranslate"><span class="pre">cot_xxx</span></code> value, see <code class="docutils literal notranslate"><span class="pre">compiler_consts.py</span></code>)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> object</p></li>
+<li><p><strong>element_type</strong> (a <code class="docutils literal notranslate"><span class="pre">cot_xxx</span></code> value (eg. <code class="docutils literal notranslate"><span class="pre">cot_add</span></code>)) – the type of element we are looking for     (as a <code class="docutils literal notranslate"><span class="pre">cot_xxx</span></code> value, see <code class="docutils literal notranslate"><span class="pre">compiler_consts.py</span></code>)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a set of <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> of the specified type</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">set</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a set of <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> of the specified type</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.get_all_vars_in_node">
-<code class="descclassname">decompiler_utils.</code><code class="descname">get_all_vars_in_node</code><span class="sig-paren">(</span><em>cex</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_all_vars_in_node" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">get_all_vars_in_node</code><span class="sig-paren">(</span><em class="sig-param">cex</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_all_vars_in_node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Extracts all variables involved in an expression.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – typically a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of <code class="docutils literal notranslate"><span class="pre">var_t</span></code> indexes (to <code class="docutils literal notranslate"><span class="pre">cf.lvars</span></code>)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">list</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – typically a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of <code class="docutils literal notranslate"><span class="pre">var_t</span></code> indexes (to <code class="docutils literal notranslate"><span class="pre">cf.lvars</span></code>)</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.get_cfg_for_ea">
-<code class="descclassname">decompiler_utils.</code><code class="descname">get_cfg_for_ea</code><span class="sig-paren">(</span><em>ea</em>, <em>dot_exe</em>, <em>out_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_cfg_for_ea" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">get_cfg_for_ea</code><span class="sig-paren">(</span><em class="sig-param">ea</em>, <em class="sig-param">dot_exe</em>, <em class="sig-param">out_dir</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_cfg_for_ea" title="Permalink to this definition">¶</a></dt>
 <dd><p>Debugging helper.</p>
 <p>Uses <code class="docutils literal notranslate"><span class="pre">DOT</span></code> to create a <code class="docutils literal notranslate"><span class="pre">.PNG</span></code> graphic of the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">ControlFlowinator</span></code> CFG and displays it.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ea</strong> (<em>int</em>) – address of the function to analyze</li>
-<li><strong>dot_exe</strong> (<em>string</em>) – path to the <code class="docutils literal notranslate"><span class="pre">DOT</span></code> binary</li>
-<li><strong>out_dir</strong> (<em>string</em>) – directory to write the <code class="docutils literal notranslate"><span class="pre">.DOT</span></code> file</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ea</strong> (<em>int</em>) – address of the function to analyze</p></li>
+<li><p><strong>dot_exe</strong> (<em>string</em>) – path to the <code class="docutils literal notranslate"><span class="pre">DOT</span></code> binary</p></li>
+<li><p><strong>out_dir</strong> (<em>string</em>) – directory to write the <code class="docutils literal notranslate"><span class="pre">.DOT</span></code> file</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.get_cond_from_statement">
-<code class="descclassname">decompiler_utils.</code><code class="descname">get_cond_from_statement</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_cond_from_statement" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">get_cond_from_statement</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_cond_from_statement" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a <code class="docutils literal notranslate"><span class="pre">cinsn_t</span></code> representing a control flow structure     (do, while, for, etc.), it returns the corresponding <code class="docutils literal notranslate"><span class="pre">cexpr_t</span></code>     representing the condition/argument for that code construct.</p>
 <p>This is useful since we usually want to peek into     conditional statements…</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ins</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code>) – the <code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code> associated with a control flow structure</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the condition or argument within that control flow structure</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ins</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code>) – the <code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code> associated with a control flow structure</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the condition or argument within that control flow structure</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.get_function_vars">
-<code class="descclassname">decompiler_utils.</code><code class="descname">get_function_vars</code><span class="sig-paren">(</span><em>c=None</em>, <em>ea=0</em>, <em>only_args=False</em>, <em>only_locals=False</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_function_vars" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">get_function_vars</code><span class="sig-paren">(</span><em class="sig-param">c=None</em>, <em class="sig-param">ea=0</em>, <em class="sig-param">only_args=False</em>, <em class="sig-param">only_locals=False</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_function_vars" title="Permalink to this definition">¶</a></dt>
 <dd><p>Populates a dict of <a class="reference internal" href="#decompiler_utils.my_var_t" title="decompiler_utils.my_var_t"><code class="xref py py-class docutils literal notranslate"><span class="pre">my_var_t</span></code></a> for the function
 containing the specified <code class="docutils literal notranslate"><span class="pre">ea</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object, optional</li>
-<li><strong>ea</strong> (<em>int</em>) – the function address</li>
-<li><strong>only_args</strong> (<em>bool</em><em>, </em><em>optional</em>) – extract only function arguments</li>
-<li><strong>only_locals</strong> (<em>bool</em><em>, </em><em>optional</em>) – extract only local variables</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object, optional</p></li>
+<li><p><strong>ea</strong> (<em>int</em>) – the function address</p></li>
+<li><p><strong>only_args</strong> (<em>bool</em><em>, </em><em>optional</em>) – extract only function arguments</p></li>
+<li><p><strong>only_locals</strong> (<em>bool</em><em>, </em><em>optional</em>) – extract only local variables</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A dictionary of <a class="reference internal" href="#decompiler_utils.my_var_t" title="decompiler_utils.my_var_t"><code class="xref py py-class docutils literal notranslate"><span class="pre">my_var_t</span></code></a>, indexed by their index</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary of <a class="reference internal" href="#decompiler_utils.my_var_t" title="decompiler_utils.my_var_t"><code class="xref py py-class docutils literal notranslate"><span class="pre">my_var_t</span></code></a>, indexed by their index</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.get_interesting_calls">
-<code class="descclassname">decompiler_utils.</code><code class="descname">get_interesting_calls</code><span class="sig-paren">(</span><em>c</em>, <em>user_defined=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_interesting_calls" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">get_interesting_calls</code><span class="sig-paren">(</span><em class="sig-param">c</em>, <em class="sig-param">user_defined=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_interesting_calls" title="Permalink to this definition">¶</a></dt>
 <dd><p>Not all functions are created equal.
 We are interested in functions with certain names or substrings in it.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</li>
-<li><strong>user_defined</strong> (<em>list</em><em>, </em><em>optional</em>) – a list of names (or substrings), if not supplied a     hard-coded default list will be used.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object</p></li>
+<li><p><strong>user_defined</strong> (<em>list</em><em>, </em><em>optional</em>) – a list of names (or substrings), if not supplied a     hard-coded default list will be used.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a list of <a class="reference internal" href="#decompiler_utils.callObj" title="decompiler_utils.callObj"><code class="xref py py-class docutils literal notranslate"><span class="pre">callObj</span></code></a></p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">list</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of <a class="reference internal" href="#decompiler_utils.callObj" title="decompiler_utils.callObj"><code class="xref py py-class docutils literal notranslate"><span class="pre">callObj</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.get_return_type">
-<code class="descclassname">decompiler_utils.</code><code class="descname">get_return_type</code><span class="sig-paren">(</span><em>cf=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_return_type" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">get_return_type</code><span class="sig-paren">(</span><em class="sig-param">cf=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.get_return_type" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hack to get the return value of a function.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cf</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ida_hexrays.cfuncptr_t</span></code>) – the result of <code class="docutils literal notranslate"><span class="pre">decompile()</span></code></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Type information for the return value</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><code class="xref py py-class docutils literal notranslate"><span class="pre">tinfo_t</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cf</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ida_hexrays.cfuncptr_t</span></code>) – the result of <code class="docutils literal notranslate"><span class="pre">decompile()</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Type information for the return value</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">tinfo_t</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_arithmetic_expression">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_arithmetic_expression</code><span class="sig-paren">(</span><em>cex</em>, <em>only_these=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_arithmetic_expression" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_arithmetic_expression</code><span class="sig-paren">(</span><em class="sig-param">cex</em>, <em class="sig-param">only_these=[]</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_arithmetic_expression" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks whether this is an arithmetic expression.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – expression, usually this is a <em>node</em>.</li>
-<li><strong>only_these</strong> (a list of <code class="docutils literal notranslate"><span class="pre">cot_*</span></code> constants, eg. <code class="docutils literal notranslate"><span class="pre">cot_add</span></code>.) – a list of arithmetic expressions to look for.     These are defined in <code class="xref py py-mod docutils literal notranslate"><span class="pre">ida_hexrays</span></code></li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – expression, usually this is a <em>node</em>.</p></li>
+<li><p><strong>only_these</strong> (a list of <code class="docutils literal notranslate"><span class="pre">cot_*</span></code> constants, eg. <code class="docutils literal notranslate"><span class="pre">cot_add</span></code>.) – a list of arithmetic expressions to look for.     These are defined in <code class="xref py py-mod docutils literal notranslate"><span class="pre">ida_hexrays</span></code></p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True or False</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">bool</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True or False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_array_indexing">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_array_indexing</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_array_indexing" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_array_indexing</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_array_indexing" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_asg">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_asg</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_asg" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_asg</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_asg" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_binary_truncation">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_binary_truncation</code><span class="sig-paren">(</span><em>cex</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_binary_truncation" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_binary_truncation</code><span class="sig-paren">(</span><em class="sig-param">cex</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_binary_truncation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Looking for expressions truncating a number</p>
 <p>These expressions are of the form <code class="docutils literal notranslate"><span class="pre">v1</span> <span class="pre">&amp;</span> <span class="pre">0xFFFF</span></code> or alike</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cex</strong> (<em>:class:cexpr_t</em>) – an expression</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True or False</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cex</strong> (<em>:class:cexpr_t</em>) – an expression</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True or False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_call">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_call</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_call" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_call</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_call" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_cast">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_cast</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_cast" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_cast</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_cast" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_final_expr">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_final_expr</code><span class="sig-paren">(</span><em>cex</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_final_expr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_final_expr</code><span class="sig-paren">(</span><em class="sig-param">cex</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_final_expr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Helper for internal functions.</p>
 <p>A final expression will be defined as one that     can not be further decomposed, eg. number, var, string, etc.</p>
 <p>Normally, you should not need to use this.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> object</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True or False</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>cex</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True or False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_global_var">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_global_var</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_global_var" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_global_var</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_global_var" title="Permalink to this definition">¶</a></dt>
 <dd><p>Tells whether <code class="docutils literal notranslate"><span class="pre">ins</span></code> is a global variable</p>
 <p>TODO: enhance this heuristic</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ins</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">insn_t</span></code></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True or False</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ins</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">insn_t</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True or False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_if">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_if</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_if" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_if</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_if" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_number">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_number</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_number" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_number</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_number" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience wrapper</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_ptr">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_ptr</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_ptr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_ptr</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_ptr" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_read">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_read</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_read" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_read</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Try to find read primitives.</p>
 <p>Looking for things like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">v3</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">v5</span> <span class="o">+</span> <span class="mi">784</span><span class="p">)</span>
@@ -909,34 +821,33 @@ We are interested in functions with certain names or substrings in it.</p>
 <p>NOTE: this will find expressions that are read &amp;&amp; write,
 since they are not mutually exclusive</p>
 <p>TODO: Rather rough, it is a first version…</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True or False</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True or False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_ref">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_ref</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_ref" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_ref</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_ref" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_string">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_string</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_string" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_string</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_string" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience wrapper</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.is_var">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_var</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_var" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_var</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_var" title="Permalink to this definition">¶</a></dt>
 <dd><p>Whether this <code class="docutils literal notranslate"><span class="pre">ins</span></code> corresponds to a variable</p>
 <p>Remember that if this evaluates to True, we are dealing
 with an object of type <code class="docutils literal notranslate"><span class="pre">var_ref_t</span></code> which are pretty much
@@ -948,7 +859,7 @@ between reference and variable</p>
 
 <dl class="function">
 <dt id="decompiler_utils.is_write">
-<code class="descclassname">decompiler_utils.</code><code class="descname">is_write</code><span class="sig-paren">(</span><em>node</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_write" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">is_write</code><span class="sig-paren">(</span><em class="sig-param">node</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.is_write" title="Permalink to this definition">¶</a></dt>
 <dd><p>Try to find write primitives.</p>
 <p>Looking for things like:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="p">(</span><span class="n">_DWORD</span> <span class="o">*</span><span class="p">)(</span><span class="n">something</span><span class="p">)</span> <span class="o">=</span> <span class="n">v38</span>
@@ -956,23 +867,22 @@ between reference and variable</p>
 </pre></div>
 </div>
 <p>TODO: Rather rough, it is a first version…</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True or False</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>node</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">cinsn_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> node</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>True or False</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.lex_citem_indexes">
-<code class="descclassname">decompiler_utils.</code><code class="descname">lex_citem_indexes</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.lex_citem_indexes" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">lex_citem_indexes</code><span class="sig-paren">(</span><em class="sig-param">line</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.lex_citem_indexes" title="Permalink to this definition">¶</a></dt>
 <dd><p>Part of <a class="reference external" href="https://github.com/gaasedelen/lighthouse">Lighthouse plugin</a></p>
 <p>Lex all ctree item indexes from a given line of text.
 The HexRays decompiler output contains invisible text tokens that can
@@ -981,43 +891,39 @@ be used to attribute spans of text to the ctree items that produced them.</p>
 
 <dl class="function">
 <dt id="decompiler_utils.lines_and_code">
-<code class="descclassname">decompiler_utils.</code><code class="descname">lines_and_code</code><span class="sig-paren">(</span><em>cf=None</em>, <em>ea=0</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.lines_and_code" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">lines_and_code</code><span class="sig-paren">(</span><em class="sig-param">cf=None</em>, <em class="sig-param">ea=0</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.lines_and_code" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mapping of line numbers and code</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>cf</strong> (an <code class="xref py py-class docutils literal notranslate"><span class="pre">cfunc_t</span></code> object, optional) – a decompilation object</li>
-<li><strong>ea</strong> (<em>int</em><em>, </em><em>optional</em>) – Address within the function to decompile, if no <cite>cf</cite> is provided</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cf</strong> (an <code class="xref py py-class docutils literal notranslate"><span class="pre">cfunc_t</span></code> object, optional) – a decompilation object</p></li>
+<li><p><strong>ea</strong> (<em>int</em><em>, </em><em>optional</em>) – Address within the function to decompile, if no <cite>cf</cite> is provided</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dictionary of lines of code, indexed by line number</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">dict</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a dictionary of lines of code, indexed by line number</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.main">
-<code class="descclassname">decompiler_utils.</code><code class="descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.main" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">main</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.main" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.map_citem2line">
-<code class="descclassname">decompiler_utils.</code><code class="descname">map_citem2line</code><span class="sig-paren">(</span><em>line2citem</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.map_citem2line" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">map_citem2line</code><span class="sig-paren">(</span><em class="sig-param">line2citem</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.map_citem2line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Part of <a class="reference external" href="https://github.com/gaasedelen/lighthouse">Lighthouse plugin</a></p>
 <p>Creates a mapping of citem indexes to lines of code</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.map_line2citem">
-<code class="descclassname">decompiler_utils.</code><code class="descname">map_line2citem</code><span class="sig-paren">(</span><em>decompilation_text</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.map_line2citem" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">map_line2citem</code><span class="sig-paren">(</span><em class="sig-param">decompilation_text</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.map_line2citem" title="Permalink to this definition">¶</a></dt>
 <dd><p>Part of <a class="reference external" href="https://github.com/gaasedelen/lighthouse">Lighthouse plugin</a></p>
 <p>Map decompilation line numbers to citems.
 This function allows us to build a relationship between citems in the
@@ -1026,7 +932,7 @@ ctree and specific lines in the hexrays decompilation text.</p>
 
 <dl class="function">
 <dt id="decompiler_utils.map_line2node">
-<code class="descclassname">decompiler_utils.</code><code class="descname">map_line2node</code><span class="sig-paren">(</span><em>cfunc</em>, <em>line2citem</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.map_line2node" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">map_line2node</code><span class="sig-paren">(</span><em class="sig-param">cfunc</em>, <em class="sig-param">line2citem</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.map_line2node" title="Permalink to this definition">¶</a></dt>
 <dd><p>Part of <a class="reference external" href="https://github.com/gaasedelen/lighthouse">Lighthouse plugin</a></p>
 <p>Map decompilation line numbers to node (basic blocks) addresses.
 This function allows us to build a relationship between graph nodes
@@ -1035,189 +941,170 @@ This function allows us to build a relationship between graph nodes
 
 <dl class="function">
 <dt id="decompiler_utils.map_node2lines">
-<code class="descclassname">decompiler_utils.</code><code class="descname">map_node2lines</code><span class="sig-paren">(</span><em>line2node</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.map_node2lines" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">map_node2lines</code><span class="sig-paren">(</span><em class="sig-param">line2node</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.map_node2lines" title="Permalink to this definition">¶</a></dt>
 <dd><p>Part of <a class="reference external" href="https://github.com/gaasedelen/lighthouse">Lighthouse plugin</a></p>
 <p>Creates a mapping of nodes to lines of code</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.my_decompile">
-<code class="descclassname">decompiler_utils.</code><code class="descname">my_decompile</code><span class="sig-paren">(</span><em>ea=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.my_decompile" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">my_decompile</code><span class="sig-paren">(</span><em class="sig-param">ea=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.my_decompile" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a workaround for the cache lifecycle problem.</p>
 <p>It calls the <a class="reference internal" href="#decompiler_utils.pseudoViewer" title="decompiler_utils.pseudoViewer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pseudoViewer</span></code></a> API if the function is not
 in the cache, in order to plug it in.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ea</strong> (<em>int</em>) – Address within the function to decompile</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">decompilation object</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">a <code class="xref py py-class docutils literal notranslate"><span class="pre">cfunc_t</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ea</strong> (<em>int</em>) – Address within the function to decompile</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>decompilation object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">cfunc_t</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.my_get_func_name">
-<code class="descclassname">decompiler_utils.</code><code class="descname">my_get_func_name</code><span class="sig-paren">(</span><em>ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.my_get_func_name" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">my_get_func_name</code><span class="sig-paren">(</span><em class="sig-param">ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.my_get_func_name" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wrapper for <code class="xref py py-class docutils literal notranslate"><span class="pre">get_func_name</span></code> handling some corner cases.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ea</strong> (<em>int</em>) – Address of the function to resolve its name</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ea</strong> (<em>int</em>) – Address of the function to resolve its name</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="class">
 <dt id="decompiler_utils.my_var_t">
-<em class="property">class </em><code class="descclassname">decompiler_utils.</code><code class="descname">my_var_t</code><span class="sig-paren">(</span><em>var</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.my_var_t" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">my_var_t</code><span class="sig-paren">(</span><em class="sig-param">var</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.my_var_t" title="Permalink to this definition">¶</a></dt>
 <dd><p>This wraps the <code class="xref py py-class docutils literal notranslate"><span class="pre">lvar_t</span></code> nicely into a more usable data structure.</p>
 <p>It aggregates several interesting pieces of information in one place.     eg. <code class="docutils literal notranslate"><span class="pre">is_arg</span></code>, <code class="docutils literal notranslate"><span class="pre">is_constrained</span></code>, <code class="docutils literal notranslate"><span class="pre">is_initialized</span></code>, etc.</p>
 <p>The most commonly used attributes for this class are:</p>
 <ul class="simple">
-<li>name</li>
-<li>type_name</li>
-<li>size</li>
-<li>is_arg</li>
-<li>is_pointer</li>
-<li>is_array</li>
-<li>is_signed</li>
+<li><p>name</p></li>
+<li><p>type_name</p></li>
+<li><p>size</p></li>
+<li><p>is_arg</p></li>
+<li><p>is_pointer</p></li>
+<li><p>is_array</p></li>
+<li><p>is_signed</p></li>
 </ul>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>var</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lvar_t</span></code>) – an object representing a local variable or function argument</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>var</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">lvar_t</span></code>) – an object representing a local variable or function argument</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.num_value">
-<code class="descclassname">decompiler_utils.</code><code class="descname">num_value</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.num_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">num_value</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.num_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the numerical value of <code class="docutils literal notranslate"><span class="pre">ins</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ins</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">insn_t</span></code></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ins</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">insn_t</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.points_to">
-<code class="descclassname">decompiler_utils.</code><code class="descname">points_to</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.points_to" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">points_to</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.points_to" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="class">
 <dt id="decompiler_utils.pseudoViewer">
-<em class="property">class </em><code class="descclassname">decompiler_utils.</code><code class="descname">pseudoViewer</code><a class="headerlink" href="#decompiler_utils.pseudoViewer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">pseudoViewer</code><a class="headerlink" href="#decompiler_utils.pseudoViewer" title="Permalink to this definition">¶</a></dt>
 <dd><p>This wraps the <a class="reference internal" href="#decompiler_utils.pseudoViewer" title="decompiler_utils.pseudoViewer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pseudoViewer</span></code></a> API neatly.</p>
 <p>We need it because some things don’t work unless     you previously visited (or are currently visiting)     the function whose decompiled form you want to analyze.     Thus, we are forced to “Hack like in the movies”</p>
 <p>NOTE: the performance penalty is negligible</p>
 <dl class="attribute">
 <dt id="decompiler_utils.pseudoViewer.OPEN_NEW">
-<code class="descname">OPEN_NEW</code><em class="property"> = 1</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.OPEN_NEW" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">OPEN_NEW</code><em class="property"> = 1</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.OPEN_NEW" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="decompiler_utils.pseudoViewer.REUSE_IF_PSEUDOCODE">
-<code class="descname">REUSE_IF_PSEUDOCODE</code><em class="property"> = -1</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.REUSE_IF_PSEUDOCODE" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">REUSE_IF_PSEUDOCODE</code><em class="property"> = -1</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.REUSE_IF_PSEUDOCODE" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="attribute">
 <dt id="decompiler_utils.pseudoViewer.USE_EXISTING">
-<code class="descname">USE_EXISTING</code><em class="property"> = 0</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.USE_EXISTING" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">USE_EXISTING</code><em class="property"> = 0</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.USE_EXISTING" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="decompiler_utils.pseudoViewer.close">
-<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.pseudoViewer.close" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.pseudoViewer.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closes the pseudoviewer widget</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="decompiler_utils.pseudoViewer.show">
-<code class="descname">show</code><span class="sig-paren">(</span><em>ea=0</em>, <em>reuse=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.pseudoViewer.show" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">ea=0</em>, <em class="sig-param">reuse=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.pseudoViewer.show" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays the pseudoviewer widget</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>ea</strong> (<em>int</em><em>, </em><em>optional</em>) – adress of the function to display</li>
-<li><strong>reuse</strong> (<em>int</em><em>, </em><em>optional</em>) – how to reuse an existing pseudocode display, if any</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ea</strong> (<em>int</em><em>, </em><em>optional</em>) – adress of the function to display</p></li>
+<li><p><strong>reuse</strong> (<em>int</em><em>, </em><em>optional</em>) – how to reuse an existing pseudocode display, if any</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.ref2var">
-<code class="descclassname">decompiler_utils.</code><code class="descname">ref2var</code><span class="sig-paren">(</span><em>ref</em>, <em>c=None</em>, <em>cf=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.ref2var" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">ref2var</code><span class="sig-paren">(</span><em class="sig-param">ref</em>, <em class="sig-param">c=None</em>, <em class="sig-param">cf=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.ref2var" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenient wrapper to streamline the conversions
 between <code class="docutils literal notranslate"><span class="pre">var_ref_t</span></code> and <code class="docutils literal notranslate"><span class="pre">lvar_t</span></code></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object, optional</li>
-<li><strong>cf</strong> (a <code class="xref py py-class docutils literal notranslate"><span class="pre">cfunc_t</span></code> object) – a decompilation object (usually the result of <code class="docutils literal notranslate"><span class="pre">decompile</span></code>), optional</li>
-<li><strong>ref</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">var_ref_t</span></code>) – a reference to a variable in the pseudocode</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>c</strong> (<a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a>) – a <a class="reference internal" href="#decompiler_utils.controlFlowinator" title="decompiler_utils.controlFlowinator"><code class="xref py py-class docutils literal notranslate"><span class="pre">controlFlowinator</span></code></a> object, optional</p></li>
+<li><p><strong>cf</strong> (a <code class="xref py py-class docutils literal notranslate"><span class="pre">cfunc_t</span></code> object) – a decompilation object (usually the result of <code class="docutils literal notranslate"><span class="pre">decompile</span></code>), optional</p></li>
+<li><p><strong>ref</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">var_ref_t</span></code>) – a reference to a variable in the pseudocode</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a <code class="xref py py-class docutils literal notranslate"><span class="pre">lvar_t</span></code> object</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><code class="xref py py-class docutils literal notranslate"><span class="pre">lvar_t</span></code></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a <code class="xref py py-class docutils literal notranslate"><span class="pre">lvar_t</span></code> object</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">lvar_t</span></code></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.ref_to">
-<code class="descclassname">decompiler_utils.</code><code class="descname">ref_to</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.ref_to" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">ref_to</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.ref_to" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.string_value">
-<code class="descclassname">decompiler_utils.</code><code class="descname">string_value</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.string_value" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">string_value</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.string_value" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the string corresponding to <code class="docutils literal notranslate"><span class="pre">ins</span></code></p>
 <p>Works with <em>C-str</em> and <em>Unicode</em></p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ins</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">insn_t</span></code></td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">string for this <code class="docutils literal notranslate"><span class="pre">ins</span></code></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">string</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ins</strong> – <code class="xref py py-class docutils literal notranslate"><span class="pre">cexpr_t</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">insn_t</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>string for this <code class="docutils literal notranslate"><span class="pre">ins</span></code></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>string</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="decompiler_utils.value_of_global">
-<code class="descclassname">decompiler_utils.</code><code class="descname">value_of_global</code><span class="sig-paren">(</span><em>ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.value_of_global" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">value_of_global</code><span class="sig-paren">(</span><em class="sig-param">ins</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.value_of_global" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns the value of a global variable</p>
 </dd></dl>
 

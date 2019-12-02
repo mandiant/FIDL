@@ -168,7 +168,7 @@
   <div class="section" id="getting-started">
 <span id="tutorial-label"></span><h1>Getting started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <div class="versionadded">
-<p><span class="versionmodified">New in version 1.0.</span></p>
+<p><span class="versionmodified added">New in version 1.0.</span></p>
 </div>
 <p>This section will introduce the basics of the FIDL API as well as examples for the most common tasks.</p>
 <div class="section" id="the-controlflowinator">
@@ -177,11 +177,11 @@
 <p>To understand it better, picture yourself a <em>CFG</em> where every node is a high level code construct, e.g.,</p>
 <blockquote>
 <div><ul class="simple">
-<li>if</li>
-<li>assignment</li>
-<li>function call</li>
-<li>return</li>
-<li>etc.</li>
+<li><p>if</p></li>
+<li><p>assignment</p></li>
+<li><p>function call</p></li>
+<li><p>return</p></li>
+<li><p>etc.</p></li>
 </ul>
 </div></blockquote>
 <p>In a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object, every node of the <em>CFG</em> translates roughly to a line of decompiled code.</p>
@@ -195,10 +195,10 @@
 <p>The <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> object contains by default a lot of interesting information about the function it represents, e.g.,</p>
 <blockquote>
 <div><ul class="simple">
-<li>local variables</li>
-<li>arguments</li>
-<li>function calls</li>
-<li>return type</li>
+<li><p>local variables</p></li>
+<li><p>arguments</p></li>
+<li><p>function calls</p></li>
+<li><p>return type</p></li>
 </ul>
 </div></blockquote>
 <p>This information is easily accessible as attributes. Let’s use the following function (from <code class="docutils literal notranslate"><span class="pre">putty.exe</span></code>) as an example:</p>
@@ -717,11 +717,11 @@
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
-<p class="first admonition-title">Note</p>
+<p class="admonition-title">Note</p>
 <p>The function arguments of a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code>, representing a function, and the function arguments of a specific occurrence of a function call are not of the same type.</p>
 <p>A <strong>function call</strong> can have explicitly defined constants or strings as arguments, eg. <code class="docutils literal notranslate"><span class="pre">sub_140021F58(&quot;my_string&quot;,</span> <span class="pre">1337,</span> <span class="pre">v8)</span></code> accessed via a <em>named tuple</em> as shown in the code snippet above.</p>
 <p>The function arguments of a <code class="docutils literal notranslate"><span class="pre">controlFlowinator</span></code> instance, representing the function itself, eg. <code class="docutils literal notranslate"><span class="pre">sub_140021F58(char</span> <span class="pre">*a1,</span> <span class="pre">int</span> <span class="pre">a2,</span> <span class="pre">__int64</span> <span class="pre">a3)</span></code> are of type <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code></p>
-<p class="last">However, if the function call has an argument of type <em>var</em>, its <em>val</em> (ue) will be an instance of <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code></p>
+<p>However, if the function call has an argument of type <em>var</em>, its <em>val</em> (ue) will be an instance of <code class="docutils literal notranslate"><span class="pre">my_var_t</span></code></p>
 </div>
 </div>
 <div class="section" id="a-little-example">
