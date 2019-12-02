@@ -16,4 +16,4 @@ for co in callz:
     if du.is_global_var(lhs):
         g_addr = du.value_of_global(lhs)
         new_name = "g_ptr_{}".format(api_name)
-        MakeName(g_addr, new_name)
+        set_name(g_addr, new_name, SN_CHECK)

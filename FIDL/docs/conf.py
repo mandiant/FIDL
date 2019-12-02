@@ -112,6 +112,16 @@ m.cot_ushr = 33
 m.cot_var = 65
 m.cot_xor = 20
 
+
+# Mocking object must have writable __hash__
+class Dummy():
+    pass
+
+
+m.cexpr_t = Dummy()
+m.cinsn_t = Dummy()
+m.carg_t = Dummy()
+
 sys.modules['ida_hexrays'] = m
 
 

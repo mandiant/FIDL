@@ -32,3 +32,8 @@ Running tests
 Load the test IDB ``putty.i64`` (under *tests/data*) in IDA.
 
 Now simply execute the ``pytest_fidl.py`` script (under *tests*) from within IDA (``Alt + F7``)
+
+.. warning::
+
+    There is an issue related to testing with Pytest in Python3.
+    Tests are not working for IDA with Python3 at the moment.
