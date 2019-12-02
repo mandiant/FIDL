@@ -19,12 +19,12 @@ def snow():
 
 
 def main():
-    print "-" * 60
-    print "Started tests at @ {}".format(snow())
+    print("-" * 60)
+    print("Started tests at @ {}".format(snow()))
 
     pytest.main(['--capture=sys', os.path.dirname(__file__)])
 
-    print "Finished tests at @ {}".format(snow())
+    print("Finished tests at @ {}".format(snow()))
 
 
 if __name__ == "__main__":
