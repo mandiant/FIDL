@@ -12,8 +12,7 @@
 # <carlos.garcia@fireeye.com>
 # ===========================================================================
 
-__version__ = '1.0'
-__codename__ = 'nerdilicious'
+__version__ = '1.1'
 
 from idc import *
 from idaapi import *
@@ -2247,7 +2246,7 @@ def get_all_vars_in_node(cex):
     return var_indexes
 
 
-def find_all_calls_to(f_name, ea):
+def find_all_calls_to_within(f_name, ea):
     """Finds all calls to a function with the given name \
     within the function containing the ``ea`` address.
 
@@ -2266,7 +2265,7 @@ def find_all_calls_to(f_name, ea):
     try:
         c = controlFlowinator(ea=ea, fast=False)
     except Exception as e:
-        print("Failed to find_all_calls_to {}".format(f_name))
+        print("Failed to find_all_calls_to_within {}".format(f_name))
         print(e)
         return []
 
@@ -2283,6 +2282,43 @@ def find_all_calls_to(f_name, ea):
                 break
 
     return call_objs
+
+
+def find_all_calls_to(f_name):
+    """Finds all calls to a function with the given name
+
+    Note that the string comparison is relaxed to find variants of it, that is,
+    searching for ``malloc`` will match as well ``_malloc``, ``malloc_0``, etc.
+
+    :param f_name: the function name to search for
+    :type f_name: string
+    :return: a list of :class:`callObj`
+    :rtype: list
+    """
+
+    f_ea = get_name_ea_simple(f_name)
+    if f_ea == BADADDR:
+        print("Failed to resolve address for {}".format(f_name))
+        return []
+
+    callz = []
+    callers = set()
+    
+    for ref in XrefsTo(f_ea, True):
+        if not ref.iscode:
+            continue
+
+        # Get a set of unique *function* callers
+        f = get_func(ref.frm)
+        f_ea = f.start_ea
+        callers.add(f_ea)
+            
+    for caller_ea in callers:
+        c = find_all_calls_to_within(f_name, caller_ea)
+        print("{:X}".format(caller_ea), len(c))
+        callz += c
+
+    return callz
 
 
 def find_elements_of_type(cex, element_type, elements=None):

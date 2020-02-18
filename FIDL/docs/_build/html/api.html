@@ -548,8 +548,8 @@ from <code class="docutils literal notranslate"><span class="pre">ea</span></cod
 </dd></dl>
 
 <dl class="function">
-<dt id="decompiler_utils.find_all_calls_to">
-<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">find_all_calls_to</code><span class="sig-paren">(</span><em class="sig-param">f_name</em>, <em class="sig-param">ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.find_all_calls_to" title="Permalink to this definition">¶</a></dt>
+<dt id="decompiler_utils.find_all_calls_to_within">
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">find_all_calls_to_within</code><span class="sig-paren">(</span><em class="sig-param">f_name</em>, <em class="sig-param">ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.find_all_calls_to_within" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds all calls to a function with the given name     within the function containing the <code class="docutils literal notranslate"><span class="pre">ea</span></code> address.</p>
 <p>Note that the string comparison is relaxed to find variants of it, that is,
 searching for <code class="docutils literal notranslate"><span class="pre">malloc</span></code> will match as well <code class="docutils literal notranslate"><span class="pre">_malloc</span></code>, <code class="docutils literal notranslate"><span class="pre">malloc_0</span></code>, etc.</p>

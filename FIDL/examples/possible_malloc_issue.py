@@ -24,8 +24,8 @@ def find_possible_malloc_issues(c=None):
     results = []
     suspicious_lens = []
 
-    mallocz = du.find_all_calls_to('malloc', c.ea)
-    memcpyz = du.find_all_calls_to('memcpy', c.ea)
+    mallocz = du.find_all_calls_to_within('malloc', c.ea)
+    memcpyz = du.find_all_calls_to_within('memcpy', c.ea)
 
     if not mallocz or not memcpyz:
         return []

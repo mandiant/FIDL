@@ -449,7 +449,7 @@ The following script implements this:
     import FIDL.decompiler_utils as du
 
 
-    callz = du.find_all_calls_to(f_name='GetProcAddress', ea=here())
+    callz = du.find_all_calls_to_within(f_name='GetProcAddress', ea=here())
     for co in callz:
         # The *second* argument of ``GetProcAddress`` is the API name
         api_name = co.args[1].val
@@ -540,8 +540,8 @@ The example script can be found on the **examples** directory of the source code
         results = []
         suspicious_lens = []
 
-        mallocz = du.find_all_calls_to('malloc', c.ea)
-        memcpyz = du.find_all_calls_to('memcpy', c.ea)
+        mallocz = du.find_all_calls_to_within('malloc', c.ea)
+        memcpyz = du.find_all_calls_to_within('memcpy', c.ea)
 
         if not mallocz or not memcpyz:
             return []
@@ -617,7 +617,7 @@ The example script can be found on the **examples** directory of the source code
 
 As we can see, :ref:`controlFlowinator_label` object is indeed the central piece of this API. It is the only argument of the function ``find_possible_malloc_issues`` at line 14. The convenience function ``do_for_all_funcs`` (line 89) is used to iterate over all functions on a binary, calculate their ``controlFlowinator`` and call a function with it as parameter (see line 90) and the API documentation for more information about this wrapper.
 
-At lines 27, 28 all occurrences of calls to ``malloc`` and ``memcpy`` are calculated. The result of ``find_all_calls_to`` are so called ``callObj``, a complex data structure containing a lot of information about the *call* (name, arguments, location, etc.)
+At lines 27, 28 all occurrences of calls to ``malloc`` and ``memcpy`` are calculated. The result of ``find_all_calls_to_within`` are so called ``callObj``, a complex data structure containing a lot of information about the *call* (name, arguments, location, etc.)
 
 The argument of ``malloc`` is used as a parameter of ``is_arithmetic_expression`` (line 41), an auxiliary function returning a *boolean*, indicating whether the expression is arithmetic (that is, addition, substraction, multiplication, etc. or a combination of them). In this specific case we specify a second parameter to restrict the search to additions only.
 

@@ -3,7 +3,7 @@
 import FIDL.decompiler_utils as du
 
 
-callz = du.find_all_calls_to(f_name='GetProcAddress', ea=here())
+callz = du.find_all_calls_to_within(f_name='GetProcAddress', ea=here())
 for co in callz:
     # The *second* argument of ``GetProcAddress`` is the API name
     api_name = co.args[1].val

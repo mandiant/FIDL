@@ -7,12 +7,12 @@ def readme():
 
 
 setup(name='FIDL',
-      version='1.0',
-      description='Wrapper for the IDA decompiler API',
+      version='1.1',
+      description='Wrapper for Hex-Rays decompiler API',
       classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
         'Topic :: Software Development :: Disassemblers',
       ],
       keywords='ida decompiler api vulnerability research reversing malware',
