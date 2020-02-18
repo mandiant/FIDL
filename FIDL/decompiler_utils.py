@@ -1306,7 +1306,7 @@ def display_all_calls_to(func_name):
     :type func_name: string
     """
 
-    f_ea = LocByName(func_name)
+    f_ea = get_name_ea_simple(func_name)
     if f_ea == BADADDR:
         print("Can not find {}".format(func_name))
         return None
