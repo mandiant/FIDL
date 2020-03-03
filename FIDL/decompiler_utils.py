@@ -2310,6 +2310,9 @@ def find_all_calls_to(f_name):
 
         # Get a set of unique *function* callers
         f = get_func(ref.frm)
+        if f is None:
+            continue
+            
         f_ea = f.start_ea
         callers.add(f_ea)
             
