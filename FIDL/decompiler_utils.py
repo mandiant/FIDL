@@ -28,7 +28,7 @@ import os
 import random
 import traceback
 import networkx as nx
-from collections import namedtuple, defaultdict
+from collections import namedtuple, defaultdict, OrderedDict
 from six.moves import xrange
 
 DEBUG = False
@@ -742,14 +742,30 @@ def get_function_vars(c=None, ea=0, only_args=False, only_locals=False):
     # Successful decompilation at `ea` point
     # `cf.lvars` is an array of `lvars_t`
     # `idx` is the index into this array to be used later
+    #
+    # I need to re-order the list of arguments.
+    # No idea why, but IDA does not spit the arguments in order.
+    # It keeps however a list of how the indexes are messed up in ``c.cf.argidx``
+    ordered_vars = [None] * len(cf.lvars)
+
+    for i, v in enumerate(cf.lvars):
+        if v.is_arg_var:
+            # Need to fix order
+            idx = cf.argidx[i]
+        else:
+            # Local vars seem to be fine
+            idx = i
+
+        ordered_vars[idx] = v
+
     if only_args:
-        return {idx: my_var_t(v) for idx, v in enumerate(cf.lvars)
-                if v.is_arg_var and v.name}
+        return OrderedDict({idx: my_var_t(v) for idx, v in enumerate(ordered_vars)
+                            if v.is_arg_var and v.name})
     elif only_locals:
-        return {idx: my_var_t(v) for idx, v in enumerate(cf.lvars)
-                if not v.is_arg_var and v.name}
+        return OrderedDict({idx: my_var_t(v) for idx, v in enumerate(ordered_vars)
+                            if not v.is_arg_var and v.name})
     else:
-        return {idx: my_var_t(v) for idx, v in enumerate(cf.lvars)}
+        return OrderedDict({idx: my_var_t(v) for idx, v in enumerate(ordered_vars)})
 
 
 def ref2var(ref, c=None, cf=None):
