@@ -679,28 +679,27 @@ class pseudoViewer:
     the function whose decompiled form you want to analyze. \
     Thus, we are forced to "Hack like in the movies"
 
+    TODO: probably deprecate this after IDA 7.5 changes
     NOTE: the performance penalty is negligible
     """
 
-    USE_EXISTING = 0
-    OPEN_NEW = 1
-    REUSE_IF_PSEUDOCODE = -1
+    silent_flags = ida_hexrays.OPF_REUSE | ida_hexrays.OPF_NO_WAIT
 
     def __init__(self):
         self.vdui = None
         self.p_twidget = None
 
-    def show(self, ea=0, reuse=REUSE_IF_PSEUDOCODE):
+    def show(self, ea=0, flags=silent_flags):
         """Displays the pseudoviewer widget
 
         :param ea: adress of the function to display
         :type ea: int, optional
-        :param reuse: how to reuse an existing pseudocode display, if any
-        :type reuse: int, optional
+        :param flags: how to flags an existing pseudocode display, if any
+        :type flags: int, optional
         """
 
         try:
-            self.vdui = open_pseudocode(ea, reuse)
+            self.vdui = open_pseudocode(ea, flags)
             if self.vdui:
                 self.p_twidget = self.vdui.ct
         except Exception as e:
@@ -1023,10 +1022,7 @@ def is_if(ins):
 # Auxiliary
 # ===========================================================
 def my_decompile(ea=None):
-    """This is a workaround for the cache lifecycle problem.
-
-    It calls the :class:`pseudoViewer` API if the function is not
-    in the cache, in order to plug it in.
+    """This sets flags necessary to use this programmatically.
 
     :param ea: Address within the function to decompile
     :type ea: int
@@ -1038,14 +1034,11 @@ def my_decompile(ea=None):
         print("Please specify an address (ea)")
         return None
 
-    if not has_cached_cfunc(ea):
-        # Open the disassembly view here
-        # to populate the cache
-        pw = pseudoViewer()
-        pw.show(ea=ea)
-
     try:
-        cf = decompile(ea=ea, flags=ida_hexrays.DECOMP_NO_WAIT)
+        cf = decompile(
+                       ea=ea,
+                       flags=ida_hexrays.DECOMP_NO_WAIT | ida_hexrays.DECOMP_NO_CACHE
+                       )
     except ida_hexrays.DecompilationFailure as e:
         print("Failed to decompile @ {:X}".format(ea))
         cf = None
