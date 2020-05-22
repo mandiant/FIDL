@@ -7,7 +7,7 @@ def readme():
 
 
 setup(name='FIDL',
-      version='1.1',
+      version='1.2',
       description='Wrapper for Hex-Rays decompiler API',
       classifiers=[
         'Development Status :: 4 - Beta',

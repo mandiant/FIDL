@@ -12,7 +12,7 @@
 # <carlos.garcia@fireeye.com>
 # ===========================================================================
 
-__version__ = '1.1'
+__version__ = '1.2'
 
 from idc import *
 from idaapi import *
