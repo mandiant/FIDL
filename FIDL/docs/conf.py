@@ -111,6 +111,8 @@ m.cot_umod = 41
 m.cot_ushr = 33
 m.cot_var = 65
 m.cot_xor = 20
+m.OPF_REUSE = 0
+m.OPF_NO_WAIT = 8
 
 
 # Mocking object must have writable __hash__

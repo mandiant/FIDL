@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Core API &mdash; FIDL 1.0 documentation</title>
+  <title>Core API &mdash; FIDL 1.2 documentation</title>
   
 
   
@@ -59,7 +59,7 @@
             
             
               <div class="version">
-                1.0
+                1.2
               </div>
             
           
@@ -548,6 +548,25 @@ from <code class="docutils literal notranslate"><span class="pre">ea</span></cod
 </dd></dl>
 
 <dl class="function">
+<dt id="decompiler_utils.find_all_calls_to">
+<code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">find_all_calls_to</code><span class="sig-paren">(</span><em class="sig-param">f_name</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.find_all_calls_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all calls to a function with the given name</p>
+<p>Note that the string comparison is relaxed to find variants of it, that is,
+searching for <code class="docutils literal notranslate"><span class="pre">malloc</span></code> will match as well <code class="docutils literal notranslate"><span class="pre">_malloc</span></code>, <code class="docutils literal notranslate"><span class="pre">malloc_0</span></code>, etc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>f_name</strong> (<em>string</em>) – the function name to search for</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a list of <a class="reference internal" href="#decompiler_utils.callObj" title="decompiler_utils.callObj"><code class="xref py py-class docutils literal notranslate"><span class="pre">callObj</span></code></a></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="decompiler_utils.find_all_calls_to_within">
 <code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">find_all_calls_to_within</code><span class="sig-paren">(</span><em class="sig-param">f_name</em>, <em class="sig-param">ea</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.find_all_calls_to_within" title="Permalink to this definition">¶</a></dt>
 <dd><p>Finds all calls to a function with the given name     within the function containing the <code class="docutils literal notranslate"><span class="pre">ea</span></code> address.</p>
@@ -949,9 +968,7 @@ This function allows us to build a relationship between graph nodes
 <dl class="function">
 <dt id="decompiler_utils.my_decompile">
 <code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">my_decompile</code><span class="sig-paren">(</span><em class="sig-param">ea=None</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.my_decompile" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a workaround for the cache lifecycle problem.</p>
-<p>It calls the <a class="reference internal" href="#decompiler_utils.pseudoViewer" title="decompiler_utils.pseudoViewer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pseudoViewer</span></code></a> API if the function is not
-in the cache, in order to plug it in.</p>
+<dd><p>This sets flags necessary to use this programmatically.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>ea</strong> (<em>int</em>) – Address within the function to decompile</p>
@@ -1019,22 +1036,8 @@ in the cache, in order to plug it in.</p>
 <em class="property">class </em><code class="sig-prename descclassname">decompiler_utils.</code><code class="sig-name descname">pseudoViewer</code><a class="headerlink" href="#decompiler_utils.pseudoViewer" title="Permalink to this definition">¶</a></dt>
 <dd><p>This wraps the <a class="reference internal" href="#decompiler_utils.pseudoViewer" title="decompiler_utils.pseudoViewer"><code class="xref py py-class docutils literal notranslate"><span class="pre">pseudoViewer</span></code></a> API neatly.</p>
 <p>We need it because some things don’t work unless     you previously visited (or are currently visiting)     the function whose decompiled form you want to analyze.     Thus, we are forced to “Hack like in the movies”</p>
-<p>NOTE: the performance penalty is negligible</p>
-<dl class="attribute">
-<dt id="decompiler_utils.pseudoViewer.OPEN_NEW">
-<code class="sig-name descname">OPEN_NEW</code><em class="property"> = 1</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.OPEN_NEW" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="decompiler_utils.pseudoViewer.REUSE_IF_PSEUDOCODE">
-<code class="sig-name descname">REUSE_IF_PSEUDOCODE</code><em class="property"> = -1</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.REUSE_IF_PSEUDOCODE" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="attribute">
-<dt id="decompiler_utils.pseudoViewer.USE_EXISTING">
-<code class="sig-name descname">USE_EXISTING</code><em class="property"> = 0</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.USE_EXISTING" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
+<p>TODO: probably deprecate this after IDA 7.5 changes
+NOTE: the performance penalty is negligible</p>
 <dl class="method">
 <dt id="decompiler_utils.pseudoViewer.close">
 <code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.pseudoViewer.close" title="Permalink to this definition">¶</a></dt>
@@ -1043,17 +1046,22 @@ in the cache, in order to plug it in.</p>
 
 <dl class="method">
 <dt id="decompiler_utils.pseudoViewer.show">
-<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">ea=0</em>, <em class="sig-param">reuse=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.pseudoViewer.show" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">show</code><span class="sig-paren">(</span><em class="sig-param">ea=0</em>, <em class="sig-param">flags=8</em><span class="sig-paren">)</span><a class="headerlink" href="#decompiler_utils.pseudoViewer.show" title="Permalink to this definition">¶</a></dt>
 <dd><p>Displays the pseudoviewer widget</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ea</strong> (<em>int</em><em>, </em><em>optional</em>) – adress of the function to display</p></li>
-<li><p><strong>reuse</strong> (<em>int</em><em>, </em><em>optional</em>) – how to reuse an existing pseudocode display, if any</p></li>
+<li><p><strong>flags</strong> (<em>int</em><em>, </em><em>optional</em>) – how to flags an existing pseudocode display, if any</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="decompiler_utils.pseudoViewer.silent_flags">
+<code class="sig-name descname">silent_flags</code><em class="property"> = 8</em><a class="headerlink" href="#decompiler_utils.pseudoViewer.silent_flags" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 
@@ -1129,7 +1137,7 @@ between <code class="docutils literal notranslate"><span class="pre">var_ref_t</
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, FLARE&#39;s OTF
+        &copy; Copyright 2020, FLARE&#39;s OTF
 
     </p>
   </div>
