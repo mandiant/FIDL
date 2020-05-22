@@ -128,13 +128,13 @@ sys.modules['ida_hexrays'] = m
 # -- Project information -----------------------------------------------------
 
 project = u'FIDL'
-copyright = u'2019, FLARE\'s OTF'
+copyright = u'2020, FLARE\'s OTF'
 author = u'FLARE\'s OTF'
 
 # The short X.Y version
-version = u'1.0'
+version = u'1.2'
 # The full version, including alpha/beta/rc tags
-release = u'1.0'
+release = u'1.2'
 
 
 # -- General configuration ---------------------------------------------------
