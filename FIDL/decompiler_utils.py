@@ -2327,7 +2327,6 @@ def find_all_calls_to(f_name):
             
     for caller_ea in callers:
         c = find_all_calls_to_within(f_name, caller_ea)
-        print("{:X}".format(caller_ea), len(c))
         callz += c
 
     return callz
