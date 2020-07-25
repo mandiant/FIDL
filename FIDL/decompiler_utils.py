@@ -2281,7 +2281,8 @@ def find_all_calls_to_within(f_name, ea):
     for node in c.g.nodes:
         kalls = find_elements_of_type(node, cot_call)
         for kall in kalls:
-            if f_name in my_get_func_name(kall.x.obj_ea):
+            got_name = my_get_func_name(kall.x.obj_ea)
+            if f_name.lower() in got_name.lower(): 
                 co = callObj(
                     c=c,
                     name=f_name,
@@ -2324,7 +2325,7 @@ def find_all_calls_to(f_name):
             
         f_ea = f.start_ea
         callers.add(f_ea)
-            
+
     for caller_ea in callers:
         c = find_all_calls_to_within(f_name, caller_ea)
         callz += c
