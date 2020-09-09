@@ -1039,6 +1039,7 @@ def my_decompile(ea=None):
                        ea=ea,
                        flags=ida_hexrays.DECOMP_NO_WAIT | ida_hexrays.DECOMP_NO_CACHE
                        )
+        cf.refresh_func_ctext()
     except ida_hexrays.DecompilationFailure as e:
         print("Failed to decompile @ {:X}".format(ea))
         cf = None
