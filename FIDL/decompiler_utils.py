@@ -1069,7 +1069,7 @@ def dump_lvars(ea=0):
     print("~~~~ Dumping local variables ~~~~")
 
     try:
-        cf = controlFlowinator(ea=ea)
+        c = controlFlowinator(ea=ea)
     except Exception as e:
         print("Failed to decompile {:X}".format(ea))
         return None
@@ -2027,7 +2027,7 @@ def get_cfg_for_ea(ea, dot_exe, out_dir):
     os.system(cmd2)
 
 
-def debug_blownup_expressions(c=None):
+def debug_blownup_expressions(c=None, node=None):
     """ Debugging helper.
 
     Show all blown up expressions for this function.
@@ -2036,22 +2036,29 @@ def debug_blownup_expressions(c=None):
     :type c: :class:`controlFlowinator`
     """
 
-    if not c:
+    if not c and not node:
         print("I need a controlFlowinator object")
         return
 
-    for node in c.g.nodes:
-        ea = node.ea
-        if type(node) == cinsn_t:
-            node = get_cond_from_statement(node)
-            if not node:
-                print("{:X} ???".format(ea))
-                continue
-
+    if node:
         elems = blowup_expression(node)
         s_elems = ",".join([expr_ctype[e.op] for e in elems])
 
-        print("{:X} {}".format(ea, s_elems))
+        print("{:X} {}".format(node.ea, s_elems))
+
+    else:
+        for node in c.g.nodes:
+            ea = node.ea
+            if type(node) == cinsn_t:
+                node = get_cond_from_statement(node)
+                if not node:
+                    print("{:X} ???".format(ea))
+                    continue
+
+            elems = blowup_expression(node)
+            s_elems = ",".join([expr_ctype[e.op] for e in elems])
+
+            print("{:X} {}".format(ea, s_elems))
 
 
 def create_comment(c=None, ea=0, comment=""):
