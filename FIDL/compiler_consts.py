@@ -109,7 +109,7 @@ expr_final = {
     cot_var:      '{x}',
     cot_helper:  '{helper}',
     cot_obj:   '{obj_ea}',
-    # cot_call:   '{x}({y})',
+    cot_call:   '{x}({y})',
 }
 
 # =================================
