@@ -888,6 +888,16 @@ def is_call(ins):
     return False
 
 
+def is_helper(ins):
+    """Helpers are IDA macros,
+       e.g. __ROR__ or LOBYTE
+    """
+    if ins.op == cot_helper:
+        return True
+
+    return False
+
+
 def is_ref(ins):
     if ins.op == cot_ref:
         return True
