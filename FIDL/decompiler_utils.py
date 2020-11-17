@@ -71,10 +71,13 @@ def debug_get_break_statements(c):
             cex = n
         if cex.op == cit_break:
             return [c.ea]
+
         operands = blowup_expression(cex)
+
         for operand in operands:
             if operand.op == cit_break:
                 return [c.ea]
+
     return [0]
 
 
@@ -2215,6 +2218,7 @@ def blowup_expression(cex, final_operands=None):
 
     # Recursion and default values in Python...
     if final_operands is None:
+        # First call, before recursion
         final_operands = set([])
 
     operands = {}
