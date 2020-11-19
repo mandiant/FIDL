@@ -40,7 +40,8 @@ expr_taint_propagation = {
     cot_shl:      '{x} << {y}',
     cot_idx:      '{x}[{y}]',
     # Some other forms of control
-    # cot_call:   '{x}({a})',
+    #cot_call:   '{x}({y})',
+    cot_cast:   '({x}){y}',
 
 }
 

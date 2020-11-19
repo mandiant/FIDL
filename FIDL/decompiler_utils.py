@@ -956,6 +956,27 @@ def is_string(ins):
 
     return False
 
+def is_member_pointer(ins):
+    """Convenience wrapper"""
+    if ins.op == cot_memptr:
+        return True
+
+    return False
+
+def member_info(ins):
+    """Returns info about a pointer to a structure member
+
+    :param ins: :class:`cexpr_t` or :class:`insn_t`
+    """
+
+    m_info = {
+        'type_name': str(ins.type),
+        'offset': ins.m,
+        'size': ins.type.get_size(),
+        'struct_var_idx': ins.x.v.idx
+    }
+
+    return m_info
 
 def string_value(ins):
     """Gets the string corresponding to ``ins``
