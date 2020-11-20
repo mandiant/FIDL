@@ -963,8 +963,16 @@ def is_member_pointer(ins):
 
     return False
 
+def is_struct_member(ins):
+    """Convenience wrapper"""
+    if ins.op == cot_memref:
+        return True
+
+    return False
+
 def member_info(ins):
-    """Returns info about a pointer to a structure member
+    """Returns info about a structure member
+       or a pointer to it
 
     :param ins: :class:`cexpr_t` or :class:`insn_t`
     """
