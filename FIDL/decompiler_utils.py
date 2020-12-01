@@ -1922,7 +1922,7 @@ class controlFlowinator:
         self.index2node = _nodez
         self.node2index = {v: k for k, v in _nodez.items()}
 
-    def _get_all_function_calls(self):
+    def _get_all_function_calls(self, with_helpers=True):
         """It does exactly what the name says
 
            This is needed because calls don't always appear
@@ -1932,6 +1932,7 @@ class controlFlowinator:
 
            Returns: None (it sets self.calls)
         """
+
         for n in self.g.nodes():
             # Which nodes are prone to contain function calls?
             if n.op == cit_if:
@@ -1952,7 +1953,7 @@ class controlFlowinator:
 
             # This catches nodes that are pure calls
             # ex: sub_xxx(1, 2);
-            if cex.op == cot_call:
+            if is_call(cex):
                 name = my_get_func_name(cex.x.obj_ea) or 'sub_unknown'
                 co = callObj(c=self, name=name, node=n, expr=cex)
                 self.calls.append(co)
@@ -1962,13 +1963,30 @@ class controlFlowinator:
             # would be to check both sides of an assignment
             operands = blowup_expression(cex)
             for operand in operands:
-                if operand.op == cot_call:
+                if is_call(operand):
                     # The node in our CFG is the expression
                     # containing the function call
                     name = my_get_func_name(operand.x.obj_ea) or 'sub_unknown'
 
                     co = callObj(c=self, name=name, node=n, expr=operand)
                     self.calls.append(co)
+
+        if not with_helpers:
+            return
+
+        #
+        # Second pass to try to locate helper functions
+        #
+        for co in self.calls:
+            if co.call_ea == BADADDR:
+                # This may be a helper
+                helperz = find_elements_of_type(co.node, cot_helper)
+                if not helperz or len(helperz) > 1:
+                    continue
+
+                h = helperz.pop()
+                co.name = h.helper
+                co.is_helper = True
 
     # ================================================================================
     # Debugging utilities
@@ -2160,6 +2178,7 @@ class callObj:
         self.ea = None
         self.call_ea = None
         self.ret_type = None
+        self.is_helper = False
 
         # Node in our CFG containing the call expr
         self.node = node
@@ -2329,18 +2348,9 @@ def find_all_calls_to_within(f_name, ea):
         print(e)
         return []
 
-    for node in c.g.nodes:
-        kalls = find_elements_of_type(node, cot_call)
-        for kall in kalls:
-            got_name = my_get_func_name(kall.x.obj_ea)
-            if f_name.lower() in got_name.lower(): 
-                co = callObj(
-                    c=c,
-                    name=f_name,
-                    node=node,
-                    expr=kall)
-                call_objs.append(co)
-                break
+    for co in c.calls:
+        if f_name.lower() in co.name.lower():
+            call_objs.append(co)
 
     return call_objs
 
