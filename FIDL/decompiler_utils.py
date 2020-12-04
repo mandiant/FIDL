@@ -616,7 +616,7 @@ class my_var_t:
             self.array_type = tif.get_array_element()
             self.element_size = self.array_type.get_size()
             if self.element_size:
-                self.array_len = self.size / self.element_size
+                self.array_len = int(self.size / self.element_size)
 
         # Ex: char *str -> char (None if the type is not a pointer)
         if tif.is_ptr():
