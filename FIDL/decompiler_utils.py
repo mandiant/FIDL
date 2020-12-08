@@ -2325,7 +2325,7 @@ def get_all_vars_in_node(cex):
     return var_indexes
 
 
-def find_all_calls_to_within(f_name, ea):
+def find_all_calls_to_within(f_name, ea=0, c=None):
     """Finds all calls to a function with the given name \
     within the function containing the ``ea`` address.
 
@@ -2336,17 +2336,21 @@ def find_all_calls_to_within(f_name, ea):
     :type f_name: string
     :param ea: any address within the function that may contain the calls
     :type ea: int
+    :param c: if specified, work on this ``controlFlowinator`` object
+    :type c: :class:`controlFlowinator`, optional
     :return: a list of :class:`callObj`
     :rtype: list
     """
 
     call_objs = []
-    try:
-        c = controlFlowinator(ea=ea, fast=False)
-    except Exception as e:
-        print("Failed to find_all_calls_to_within {}".format(f_name))
-        print(e)
-        return []
+
+    if c is None:
+        try:
+            c = controlFlowinator(ea=ea, fast=False)
+        except Exception as e:
+            print("Failed to find_all_calls_to_within {}".format(f_name))
+            print(e)
+            return []
 
     for co in c.calls:
         if f_name.lower() in co.name.lower():
