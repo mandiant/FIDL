@@ -57,18 +57,8 @@ ida_hexrays.carg_t.__hash__ = _hash_from_obj_id
 
 def debug_get_break_statements(c):
     for n in c.g.nodes():
-        if n.op == cit_if:
-            cex = n.cif.expr
-        elif n.op == cit_return:
-            cex = n.creturn.expr
-        elif n.op == cit_for:
-            cex = n.cfor.expr
-        elif n.op == cit_while:
-            cex = n.cwhile.expr
-        elif n.op == cit_do:
-            cex = n.cdo.expr
-        else:
-            cex = n
+        cex = get_expr(n)
+
         if cex.op == cit_break:
             return [c.ea]
 
@@ -1935,21 +1925,7 @@ class controlFlowinator:
 
         for n in self.g.nodes():
             # Which nodes are prone to contain function calls?
-            if n.op == cit_if:
-                # if(sub_xxx() != v1)
-                cex = n.cif.expr
-            elif n.op == cit_return:
-                # return sub_yyy()
-                cex = n.creturn.expr
-            elif n.op == cit_for:
-                cex = n.cfor.expr
-            elif n.op == cit_while:
-                cex = n.cwhile.expr
-            elif n.op == cit_do:
-                cex = n.cdo.expr
-            else:
-                # asg, call, etc.
-                cex = n
+            cex = get_expr(n)
 
             # This catches nodes that are pure calls
             # ex: sub_xxx(1, 2);
@@ -2246,11 +2222,33 @@ class callObj:
         print("Target's Name: {}".format(self.name))
         print("Target's Ea: {:X}".format(self.call_ea))
         print("Target's ret: {}".format(self.ret_type))
+        print("Is helper: {}".format(self.is_helper))
         print("Args:")
         for i, arg in self.args.items():
             print(" - {}: {}".format(i, arg))
 
         return ""
+
+
+def get_expr(n):
+    """Returns the corresponding :class:`cexpr_t` in case `n` is
+       of type :class:`cinsn_t`. Idempotent otherwise.
+    """
+
+    if n.op == cit_if:
+        cex = n.cif.expr
+    elif n.op == cit_return:
+        cex = n.creturn.expr
+    elif n.op == cit_for:
+        cex = n.cfor.expr
+    elif n.op == cit_while:
+        cex = n.cwhile.expr
+    elif n.op == cit_do:
+        cex = n.cdo.expr
+    else:
+        cex = n
+
+    return cex
 
 
 def blowup_expression(cex, final_operands=None):
@@ -2563,15 +2561,25 @@ def does_constrain(node):
 
     constrained_var_idxs = set([])
 
-    # ===========================
-    # Something simple as v1 = 0
-    # or v1 = sub_xxx(y)
-    # ===========================
     if is_asg(node):
         lhs = node.x
         rhs = node.y
 
-        if is_var(lhs) and not is_var(rhs):
+        # =================================
+        # Binary truncation
+        # ex: v1 = v4 & 0xFFFF
+        # =================================
+        if is_binary_truncation(rhs):
+            var_indexes = get_all_vars_in_node(lhs)
+            # TODO: Refine this algorithm
+            v_idx = var_indexes[0]
+
+            return set([v_idx])
+
+        # ===========================
+        # Something simple as v1 = 0
+        # ===========================
+        if is_var(lhs) and is_number(rhs):
             v_idx = lhs.v.idx
             constrained_var_idxs.add(v_idx)
 
@@ -2605,20 +2613,6 @@ def does_constrain(node):
                     node.ea, expr_ctype[cond.op]))
 
         return constrained_var_idxs
-
-    # =================================
-    # Binary truncation
-    # ex: v1 = v4 & 0xFFFF
-    # =================================
-    if is_asg(node):
-        rhs = node.y
-        lhs = node.x
-        if is_binary_truncation(rhs):
-            var_indexes = get_all_vars_in_node(lhs)
-            # TODO: Refine this algorithm
-            v_idx = var_indexes[0]
-
-            return set([v_idx])
 
     # TODO: More constraining cases here
 
