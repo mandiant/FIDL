@@ -2101,15 +2101,14 @@ def debug_blownup_expressions(c=None, node=None):
 def create_comment(c=None, ea=0, comment=""):
     """Displays a comment at the line corresponding to ``ea``
 
-    TODO: avoid creating orphan comment in case the mapping
-    from ``ea`` to decompiled code fails
-
     :param c: a :class:`controlFlowinator` object
     :type c: :class:`controlFlowinator`
     :param ea: address for the comment
     :type ea: int
     :param comment: the comment to add
     :type comment: string
+    :return: returns True if comment successfully created
+    :rtype: bool
     """
 
     if not c:
@@ -2124,9 +2123,16 @@ def create_comment(c=None, ea=0, comment=""):
 
     tl = treeloc_t()
     tl.ea = ea
-    tl.itp = ITP_SEMI
-    cf.set_user_cmt(tl, comment)
-    cf.save_user_cmts()
+    #for all cases see https://www.hex-rays.com/products/ida/support/idapython_docs/ida_hexrays-module.html
+    for itp in [ITP_SEMI, ITP_CURLY1, ITP_CURLY2, ITP_COLON, ITP_BRACE1, ITP_BRACE2, ITP_ASM, ITP_ELSE, ITP_DO, ITP_CASE] + list(range(65)):#the range covers ITP_ARG1 to ITP_ARG64 and ITP_EMPTY(0)
+        tl.itp = itp
+        cf.set_user_cmt(tl, comment)
+        cf.save_user_cmts()
+        cf.__str__()#trigger string representation, otherwise orphan comments aren't detected
+        if not cf.has_orphan_cmts():
+            return True
+        cf.del_orphan_cmts()
+    return False
 
 
 # ===========================================================
