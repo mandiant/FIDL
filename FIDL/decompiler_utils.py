@@ -1947,28 +1947,22 @@ class controlFlowinator:
                     co = callObj(c=self, name=name, node=n, expr=operand)
                     self.calls.append(co)
 
-                if is_helper(operand):
-                    name = operand.helper
-                    co = callObj(c=self, name=name, node=n, expr=None)
-                    co.is_helper = True
-                    self.calls.append(co)
-
         if not with_helpers:
             return
 
-        #
         # Second pass to try to locate helper functions
-        #
+        # and indirect function calls
         for co in self.calls:
-            if co.call_ea == BADADDR:
-                # This may be a helper
-                helperz = find_elements_of_type(co.node, cot_helper)
-                if not helperz or len(helperz) > 1:
-                    continue
+            expr = co.expr
+            if hasattr(expr, 'x'):
+                if is_helper(expr.x):
+                    co.name = expr.x.helper
+                    co.is_helper = True
 
-                h = helperz.pop()
-                co.name = h.helper
-                co.is_helper = True
+                if is_var(expr.x):
+                    v_name = ref2var(expr.x, c=self).name or "sub_indirect"
+                    co.name = v_name
+                    co.is_indirect = True
 
     # ================================================================================
     # Debugging utilities
@@ -2167,6 +2161,7 @@ class callObj:
         self.call_ea = None
         self.ret_type = None
         self.is_helper = False
+        self.is_indirect = False
 
         # Node in our CFG containing the call expr
         self.node = node
