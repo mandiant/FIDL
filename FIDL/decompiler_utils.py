@@ -1947,6 +1947,12 @@ class controlFlowinator:
                     co = callObj(c=self, name=name, node=n, expr=operand)
                     self.calls.append(co)
 
+                if is_helper(operand):
+                    name = operand.helper
+                    co = callObj(c=self, name=name, node=n, expr=None)
+                    co.is_helper = True
+                    self.calls.append(co)
+
         if not with_helpers:
             return
 
@@ -2172,9 +2178,12 @@ class callObj:
             # being called at location `self.ea`
             self.call_ea = self.expr.x.obj_ea
 
-            # This is the Ea of the `call` instruction
-            # and obviously of the decompiled function call
+            # This is the Ea of the `call` (assembly) instruction
+            # and obviously of the decompiled function call as well
             self.ea = self.expr.ea
+        else:
+            self.call_ea = BADADDR
+            self.ea = BADADDR
 
         self._populate_args()
         self._populate_return_type()
@@ -2182,7 +2191,11 @@ class callObj:
     def _populate_args(self):
         """Performs some arguments preprocessing"""
 
-        self.ida_args = list(self.expr.a)
+        if not self.expr:
+            self.ida_args = []
+        else:
+            self.ida_args = list(self.expr.a)
+
         self.args = {}
 
         Rep = namedtuple('Rep', 'type val')
