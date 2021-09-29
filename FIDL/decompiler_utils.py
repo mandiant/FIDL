@@ -1050,6 +1050,13 @@ def is_if(ins):
     return False
 
 
+def is_return(ins):
+    if ins.op == cit_return:
+        return True
+
+    return False
+
+
 # ===========================================================
 # Auxiliary
 # ===========================================================
@@ -1416,7 +1423,7 @@ class controlFlowinator:
         # A map of graph nodes and their indexes
         self.index2node = {}
 
-        # Convenient to ve the reverse mapping
+        # Convenient to have the reverse mapping
         self.node2index = {}
 
         # Superblock is the root
@@ -1947,18 +1954,16 @@ class controlFlowinator:
                     co = callObj(c=self, name=name, node=n, expr=operand)
                     self.calls.append(co)
 
-        if not with_helpers:
-            return
-
         # Second pass to try to locate helper functions
         # and indirect function calls
         for co in self.calls:
             expr = co.expr
-            if hasattr(expr, 'x'):
+            if hasattr(expr, 'x') and with_helpers:
                 if is_helper(expr.x):
                     co.name = expr.x.helper
                     co.is_helper = True
 
+            if hasattr(expr, 'x'):
                 if is_var(expr.x):
                     v_name = ref2var(expr.x, c=self).name or "sub_indirect"
                     co.name = v_name
@@ -2165,6 +2170,7 @@ class callObj:
 
         # Node in our CFG containing the call expr
         self.node = node
+
         # The call expr itself (cot_call)
         self.expr = expr
 
@@ -2237,6 +2243,7 @@ class callObj:
         print("Target's Ea: {:X}".format(self.call_ea))
         print("Target's ret: {}".format(self.ret_type))
         print("Is helper: {}".format(self.is_helper))
+        print("Is indirect: {}".format(self.is_indirect))
         print("Args:")
         for i, arg in self.args.items():
             print(" - {}: {}".format(i, arg))
