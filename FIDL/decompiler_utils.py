@@ -2378,7 +2378,7 @@ def find_all_calls_to_within(f_name, ea=0, c=None):
     return call_objs
 
 
-def find_all_calls_to(f_name):
+def find_all_calls_to(f_name, bruteforce=True):
     """Finds all calls to a function with the given name
 
     Note that the string comparison is relaxed to find variants of it, that is,
@@ -2386,33 +2386,47 @@ def find_all_calls_to(f_name):
 
     :param f_name: the function name to search for
     :type f_name: string
+    :param bruteforce: fallback to bruteforce (search all functions)
+    :type bruteforce: bool, optional
     :return: a list of :class:`callObj`
     :rtype: list
     """
 
+    got_name = True
+
     f_ea = get_name_ea_simple(f_name)
     if f_ea == BADADDR:
-        print("Failed to resolve address for {}".format(f_name))
-        return []
+        dprint("Failed to resolve address for {}".format(f_name))
+        got_name = False
+        if not bruteforce:
+            return []
 
     callz = []
     callers = set()
-    
-    for ref in XrefsTo(f_ea, True):
-        if not ref.iscode:
-            continue
 
-        # Get a set of unique *function* callers
-        f = get_func(ref.frm)
-        if f is None:
-            continue
-            
-        f_ea = f.start_ea
-        callers.add(f_ea)
+    if got_name:
+        for ref in XrefsTo(f_ea, True):
+            if not ref.iscode:
+                continue
 
-    for caller_ea in callers:
-        c = find_all_calls_to_within(f_name, caller_ea)
-        callz += c
+            # Get a set of unique *function* callers
+            f = get_func(ref.frm)
+            if f is None:
+                continue
+                
+            f_ea = f.start_ea
+            callers.add(f_ea)
+
+        for caller_ea in callers:
+            cl = find_all_calls_to_within(f_name, caller_ea)
+            callz += cl
+
+    else:
+        # We fallback to bruteforce
+        dprint("Falling back to bruteforce (search all functions)")
+        for f_ea in NonLibFunctions():
+            cl = find_all_calls_to_within(f_name, f_ea)
+            callz += cl
 
     return callz
 

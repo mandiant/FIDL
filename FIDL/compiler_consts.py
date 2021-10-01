@@ -42,7 +42,7 @@ expr_taint_propagation = {
     # Some other forms of control
     #cot_call:   '{x}({y})',
     cot_cast:   '({x}){y}',
-
+    cot_ref:      '&{x}',
 }
 
 expr_condition = {
