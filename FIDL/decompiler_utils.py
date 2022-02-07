@@ -2363,6 +2363,13 @@ def find_all_calls_to_within(f_name, ea=0, c=None):
 
     call_objs = []
 
+    if ea == 0:
+        # Try to get this from the name
+        ea = get_name_ea_simple(f_name)
+        if ea == BADADDR:
+            dprint(f"Failed to resolve address for {f_name}")
+            return []
+
     if c is None:
         try:
             c = controlFlowinator(ea=ea, fast=False)
