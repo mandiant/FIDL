@@ -1543,21 +1543,21 @@ class controlFlowinator:
         try:
             succs = list(self.i_cfg.successors(block.index))
             if len(succs) > 1:
-                print("More than one successor!")
-                print("Check this out")
+                dprint("More than one successor!")
+                dprint("Check this out")
 
             if succs:
                 succ = succs[0]
             else:
                 succ = None
         except nx.NetworkXError as e:
-            print("_get_block_successor: {}".format(e))
+            dprint("_get_block_successor: {}".format(e))
             succ = None
 
         if not succ:
-            print("Block: {:#08x}".format(block.ea))
-            print(" succs: {}".format(succs))
-            print(" No successor! Take a look into this!")
+            dprint("Block: {:#08x}".format(block.ea))
+            dprint(" succs: {}".format(succs))
+            dprint(" No successor! Take a look into this!")
 
         return succ
 
@@ -2374,8 +2374,8 @@ def find_all_calls_to_within(f_name, ea=0, c=None):
         try:
             c = controlFlowinator(ea=ea, fast=False)
         except Exception as e:
-            print("Failed to find_all_calls_to_within {}".format(f_name))
-            print(e)
+            dprint("Failed to find_all_calls_to_within {}".format(f_name))
+            dprint(e)
             return []
 
     for co in c.calls:
