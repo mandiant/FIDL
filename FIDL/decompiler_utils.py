@@ -12,7 +12,7 @@
 # <carlos.garcia@fireeye.com>
 # ===========================================================================
 
-__version__ = '1.2'
+__version__ = '1.3'
 
 from idc import *
 from idaapi import *
@@ -738,17 +738,16 @@ def get_function_vars(c=None, ea=0, only_args=False, only_locals=False):
     # I need to re-order the list of arguments.
     # No idea why, but IDA does not spit the arguments in order.
     # It keeps however a list of how the indexes are messed up in ``c.cf.argidx``
-    ordered_vars = [None] * len(cf.lvars)
 
-    for i, v in enumerate(cf.lvars):
-        if v.is_arg_var:
-            # Need to fix order
-            idx = cf.argidx[i]
-        else:
-            # Local vars seem to be fine
-            idx = i
+    # Only arguments
+    arg_vars = [x for x in c.cf.lvars if x.is_arg_var and x.name]
 
-        ordered_vars[idx] = v
+    # Lvars are in the correct order, args are messed up
+    ordered_vars = list(c.cf.lvars)
+
+    # Second pass reordering "argument elements"
+    for i, j in enumerate(c.cf.argidx):
+        ordered_vars[i] = arg_vars[j]
 
     if only_args:
         return OrderedDict({idx: my_var_t(v) for idx, v in enumerate(ordered_vars)
